@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control de Proyectos PROINNOVATE</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#4f46e5;--brand-dk:#3730a3;--brand-lt:#eef2ff;--brand-md:#818cf8;
+  --teal:#0891b2;--teal-lt:#ecfeff;
+  --emerald:#059669;--emerald-lt:#ecfdf5;
+  --amber:#d97706;--amber-lt:#fffbeb;
+  --rose:#e11d48;--rose-lt:#fff1f2;
+  --orange:#e8640a;--orange2:#f97c28;--orange-lt:#fff3ec;
+  --g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;
+  --g400:#9ca3af;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g900:#111827;
+  --bg:#f1f5f9;--white:#fff;--border:#e5e7eb;--border2:#d1d5db;
+  --text:#111827;--text2:#4b5563;--text3:#9ca3af;
+  --font:'Plus Jakarta Sans',system-ui,sans-serif;
+  --r4:4px;--r6:6px;--r8:8px;--r10:10px;--r12:12px;--r16:16px;
+  --sh1:0 1px 3px rgba(0,0,0,.08);--sh2:0 4px 12px rgba(0,0,0,.08);--sh3:0 8px 24px rgba(0,0,0,.1);
+  /* compat aliases para el JS existente */
+  --navy:var(--brand-dk);--navy2:#1a3260;--navy3:var(--brand);
+  --blue:var(--brand);--blue-light:var(--brand-lt);
+  --green:var(--emerald);--green-light:var(--emerald-lt);
+  --red:var(--rose);--red-light:var(--rose-lt);
+  --surface:var(--white);--surface2:var(--g50);--surface3:var(--g100);
+  --border:var(--border);--border2:var(--border2);
+  --text2:var(--text2);--text3:var(--text3);--text4:var(--g400);
+  --fhead:var(--font);--fbody:var(--font);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased;}
+
+/* LOADER */
+#loading-overlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#1e1b4b,#3730a3,#4f46e5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .4s;}
+#loading-overlay.hidden{opacity:0;pointer-events:none;}
+.loader-logo{font-size:2rem;font-weight:800;color:#fff;letter-spacing:-.03em;}
+.loader-sub{font-size:.7rem;font-weight:600;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.18em;}
+.loader-bar{width:160px;height:2px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;}
+.loader-fill{height:100%;background:linear-gradient(90deg,#a5b4fc,#c084fc);animation:ld 1.4s ease-in-out infinite;}
+@keyframes ld{0%{width:0;margin-left:0}50%{width:60%;margin-left:20%}100%{width:0;margin-left:100%}}
+.loader-msg{font-size:.65rem;color:rgba(255,255,255,.3);}
+
+/* CONFIG BANNER */
+#config-banner{background:var(--rose-lt);border:1px solid #fecdd3;border-left:4px solid var(--rose);border-radius:var(--r8);margin:12px 20px;padding:14px 18px;display:none;}
+#config-banner.show{display:block;}
+.cb-title{font-size:.85rem;font-weight:700;color:var(--rose);margin-bottom:5px;}
+.cb-body{font-size:.73rem;color:#9f1239;line-height:1.6;}
+.cb-body code{background:#ffe4e6;padding:1px 5px;border-radius:3px;font-family:monospace;}
+.cb-input-row{display:flex;gap:8px;margin-top:10px;}
+.cb-input{flex:1;background:var(--white);border:1px solid #fca5a5;border-radius:var(--r6);font-family:var(--font);font-size:.78rem;padding:8px 12px;outline:none;color:var(--text);}
+.cb-input:focus{border-color:var(--rose);}
+.cb-btn{font-size:.72rem;font-weight:600;padding:8px 16px;border-radius:var(--r6);border:none;background:var(--rose);color:#fff;cursor:pointer;}
+
+/* TOPBAR */
+.top-nav{height:54px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 20px;position:sticky;top:0;z-index:200;box-shadow:var(--sh1);}
+.top-nav-left{display:flex;align-items:center;padding-right:20px;border-right:1px solid var(--border);margin-right:20px;}
+.logo{font-size:.9rem;font-weight:800;color:var(--g900);letter-spacing:-.02em;}
+.logo-sub{font-size:.58rem;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.1em;margin-top:1px;}
+.nav-tabs{display:flex;align-items:stretch;}
+.nav-tab{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:0 18px;border:none;background:transparent;color:var(--g400);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;font-family:var(--font);}
+.nav-tab:hover{color:var(--text);}
+.nav-tab.active{color:var(--brand);border-bottom-color:var(--brand);}
+.top-nav-right{margin-left:auto;display:flex;align-items:center;gap:14px;padding:10px 0;}
+.kpi-nav{display:flex;flex-direction:column;align-items:flex-end;}
+.kpi-nav-lbl{font-size:.53rem;color:var(--g400);text-transform:uppercase;letter-spacing:.07em;}
+.kpi-nav-val{font-size:.88rem;font-weight:700;font-family:var(--font);}
+.kpi-nav-val.or{color:var(--orange);}
+.kpi-nav-val.gr{color:var(--emerald);}
+.nav-sep{width:1px;height:26px;background:var(--border);}
+.sync-pill{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:20px;background:var(--g50);border:1px solid var(--border);}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--emerald);}
+.sync-dot.syncing{background:var(--amber);animation:pulse .8s infinite;}
+.sync-dot.error{background:var(--rose);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sync-lbl{font-size:.65rem;font-weight:500;color:var(--text2);}
+.save-all-btn{font-size:.72rem;font-weight:700;padding:7px 14px;border-radius:var(--r6);border:none;background:var(--brand);color:#fff;cursor:pointer;transition:background .15s;font-family:var(--font);}
+.save-all-btn:hover{background:var(--brand-dk);}
+.save-all-btn:disabled{opacity:.45;cursor:not-allowed;}
+
+/* KPI BAR */
+.kpi-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px 20px 0;}
+.kpi-card{background:var(--white);border-radius:var(--r12);padding:16px 18px;border:1px solid var(--border);display:flex;align-items:center;gap:12px;box-shadow:var(--sh1);transition:box-shadow .2s;}
+.kpi-card:hover{box-shadow:var(--sh2);}
+.kpi-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.ki-blue{background:var(--brand-lt);color:var(--brand);}
+.ki-orange{background:var(--orange-lt);color:var(--orange);}
+.ki-green{background:var(--emerald-lt);color:var(--emerald);}
+.ki-amber{background:var(--amber-lt);color:var(--amber);}
+.kpi-val{font-size:1.5rem;font-weight:800;color:var(--text);line-height:1;}
+.kpi-lbl{font-size:.65rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-top:2px;}
+
+/* PAGE */
+.page{display:none;padding:16px 20px 32px;}
+.page.active{display:block;}
+
+/* TOOLBAR */
+.toolbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
+.filter-btn{font-size:.72rem;font-weight:500;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--white);color:var(--text3);cursor:pointer;transition:all .15s;}
+.filter-btn:hover{border-color:var(--brand);color:var(--brand);}
+.filter-btn.active{background:var(--brand);color:#fff;border-color:var(--brand);}
+.search-box{margin-left:auto;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:7px 14px 7px 34px;color:var(--text);font-size:.78rem;width:220px;outline:none;font-family:var(--font);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;}
+.search-box:focus{border-color:var(--brand-md);box-shadow:0 0 0 3px rgba(79,70,229,.08);}
+.search-box::placeholder{color:var(--g400);}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(540px,1fr));gap:14px;}
+
+/* CARD */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r12);overflow:hidden;transition:box-shadow .2s,border-color .2s;box-shadow:var(--sh1);}
+.card:hover{box-shadow:var(--sh2);border-color:var(--border2);}
+.card.expanded{border-color:var(--brand-md);box-shadow:0 0 0 1px var(--brand-md),var(--sh2);}
+.card-stripe{height:4px;background:linear-gradient(90deg,var(--brand-dk),var(--brand));}
+.card.expanded .card-stripe{background:linear-gradient(90deg,var(--brand),var(--orange));}
+.card-top{padding:14px 16px 10px;cursor:pointer;display:flex;align-items:flex-start;gap:12px;transition:background .15s;}
+.card-top:hover{background:var(--g50);}
+.card-title-col{flex:1;min-width:0;}
+.card-empresa{font-size:1rem;font-weight:700;color:var(--g900);margin-bottom:2px;}
+.card-correo{font-size:.63rem;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-badges{display:flex;gap:5px;flex-wrap:wrap;align-items:center;flex-shrink:0;}
+.badge{font-size:.6rem;font-weight:600;padding:2px 9px;border-radius:12px;text-transform:uppercase;letter-spacing:.04em;}
+.bi-underdog{background:#ede9fe;color:#5b21b6;}
+.bi-parking{background:var(--brand-lt);color:var(--brand);}
+.bi-none{background:var(--g100);color:var(--g500);}
+.bd-ok{background:var(--emerald-lt);color:var(--emerald);}
+.bd-pend{background:var(--amber-lt);color:var(--amber);}
+.bd-diag{background:#fce7f3;color:#9d174d;}
+.chevron{color:var(--g400);font-size:.6rem;transition:transform .2s;flex-shrink:0;margin-top:4px;}
+.card.expanded .chevron{transform:rotate(180deg);}
+
+/* Progress */
+.prog-row{padding:0 16px 12px;}
+.prog-label{font-size:.63rem;color:var(--text3);margin-bottom:5px;display:flex;justify-content:space-between;font-weight:500;}
+.prog-label .pct{color:var(--brand);font-weight:700;}
+.prog-track{height:6px;background:var(--g100);border-radius:4px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-md));border-radius:4px;transition:width .4s;}
+
+/* Hitos */
+.hitos-row{padding:0 16px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.hito-box{background:var(--g50);border:1px solid var(--border);border-radius:var(--r8);padding:9px 12px;}
+.hito-label{font-size:.58rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;}
+.hito-box input[type=date]{background:transparent;border:none;color:var(--brand-dk);font-size:.76rem;font-weight:600;outline:none;width:100%;cursor:pointer;font-family:var(--font);}
+.hito-box input[type=date]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.4;}
+.hito-overdue{border-color:#fca5a5!important;background:var(--rose-lt)!important;}
+.hito-overdue .hito-label,.hito-overdue input[type=date]{color:var(--rose)!important;}
+.hito-soon{border-color:#fcd34d!important;background:var(--amber-lt)!important;}
+.hito-soon .hito-label{color:var(--amber)!important;}
+
+/* Billing mini */
+.billing-mini{padding:0 16px 14px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.bm-box{border-radius:var(--r8);padding:10px 14px;border:1px solid var(--border);}
+.bm-presup{background:linear-gradient(135deg,#f0f6ff,var(--brand-lt));}
+.bm-factur{background:linear-gradient(135deg,#f0faf5,var(--emerald-lt));}
+.bm-label{font-size:.58rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;}
+.bm-value{font-size:.95rem;font-weight:800;}
+.bm-presup .bm-value{color:var(--brand);}
+.bm-factur .bm-value{color:var(--emerald);}
+
+/* Card body */
+.card-body{display:none;border-top:2px solid var(--border);}
+.card.expanded .card-body{display:block;}
+.section{padding:14px 16px;border-bottom:1px solid var(--border);}
+.section:last-child{border-bottom:none;}
+.sec-title{font-size:.62rem;font-weight:700;color:var(--brand-dk);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* Fields */
+.fg{display:grid;gap:8px;}
+.fg3{grid-template-columns:1fr 1fr 1fr;}
+.field label{font-size:.6rem;font-weight:700;color:var(--text3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;}
+.field input,.field select{width:100%;background:var(--g50);border:1px solid var(--border);border-radius:var(--r6);color:var(--text);font-size:.76rem;padding:7px 10px;outline:none;transition:border-color .15s;font-family:var(--font);}
+.field input:focus,.field select:focus{border-color:var(--brand-md);box-shadow:0 0 0 3px rgba(79,70,229,.07);}
+.field input[type=date]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.4;}
+
+/* Avance */
+.av-row{display:flex;align-items:center;gap:12px;}
+.av-row input[type=range]{flex:1;accent-color:var(--brand);cursor:pointer;}
+.av-row input[type=number]{width:58px;background:var(--g50);border:1px solid var(--border);border-radius:var(--r6);color:var(--brand);font-size:.82rem;font-weight:700;padding:5px 6px;text-align:center;outline:none;font-family:var(--font);}
+.av-row span{font-size:.72rem;color:var(--text3);font-weight:600;}
+
+/* Results & projects */
+.res-list{display:flex;flex-direction:column;gap:6px;}
+.res-item{display:flex;gap:8px;align-items:flex-start;}
+.res-num{font-size:.62rem;font-weight:700;color:var(--orange);min-width:18px;margin-top:2px;}
+.res-text{font-size:.76rem;color:var(--text2);line-height:1.5;}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:7px;}
+.proj-chip{background:var(--brand-lt);border:1px solid #c3d8f7;border-left:3px solid var(--brand);border-radius:var(--r6);padding:7px 10px;font-size:.72rem;color:var(--brand-dk);line-height:1.4;font-weight:500;}
+
+/* Facturas */
+.fact-wrap{overflow-x:auto;}
+.fact-tbl{width:100%;border-collapse:collapse;min-width:720px;}
+.fact-tbl th{font-size:.6rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;text-align:left;padding:7px 10px;border-bottom:2px solid var(--border);background:var(--g50);white-space:nowrap;}
+.fact-tbl td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.fact-tbl tr:last-child td{border-bottom:none;}
+.fact-tbl tbody tr:hover td{background:var(--g50);}
+.fact-num{font-size:.65rem;font-weight:700;color:var(--text3);}
+.fact-in{background:var(--g50);border:1px solid var(--border);border-radius:var(--r4);color:var(--text);font-size:.72rem;padding:5px 8px;width:100px;text-align:right;outline:none;font-family:var(--font);}
+.fact-in:focus{border-color:var(--brand-md);}
+.fact-dt{background:var(--g50);border:1px solid var(--border);border-radius:var(--r4);color:var(--text);font-size:.66rem;padding:5px 7px;outline:none;cursor:pointer;font-family:var(--font);}
+.fact-dt::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.4;}
+.fact-dt:focus{border-color:var(--brand-md);}
+.fact-sel{background:var(--g50);border:1px solid var(--border);border-radius:var(--r4);color:var(--text);font-size:.66rem;padding:5px 7px;outline:none;cursor:pointer;font-family:var(--font);}
+.fact-sel option{background:#fff;}
+.ep{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:12px;white-space:nowrap;}
+.ep-pagado{background:var(--emerald-lt);color:var(--emerald);}
+.ep-pendiente{background:var(--rose-lt);color:var(--rose);}
+.ep-poremitir{background:var(--amber-lt);color:var(--amber);}
+.ep-porcobrar{background:var(--brand-lt);color:var(--brand);}
+.ep-porfacturar{background:#ede9fe;color:#5b21b6;}
+.fact-tot-row{background:var(--g50);}
+.fact-tot-row td{font-weight:700;font-size:.74rem;border-bottom:none!important;padding:9px 10px!important;color:var(--brand-dk);}
+
+/* Presupuestado con colores */
+.cf-presup-pagado{color:var(--emerald);font-weight:700;background:var(--emerald-lt);}
+.cf-presup-pendiente{color:var(--orange);font-weight:700;background:var(--orange-lt);}
+
+/* Save btn */
+.save-btn{display:block;width:calc(100% - 32px);margin:12px 16px;padding:9px;background:var(--brand);border:none;border-radius:var(--r6);color:#fff;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;transition:background .15s;font-family:var(--font);}
+.save-btn:hover{background:var(--brand-dk);}
+.save-btn.saving{background:var(--teal);}
+.save-btn.saved{background:var(--emerald);}
+.save-btn.error{background:var(--rose);}
+
+/* CASHFLOW */
+.cf-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
+.cf-top h2{font-size:1.05rem;font-weight:700;color:var(--g900);}
+.cf-top p{font-size:.68rem;color:var(--text3);margin-top:2px;}
+.cf-ctrl{display:flex;align-items:center;gap:10px;}
+.cf-yr-lbl{font-size:.65rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;}
+.cf-yr-in{background:var(--white);border:1px solid var(--border);border-radius:var(--r6);padding:6px 10px;color:var(--text);font-size:.74rem;font-weight:700;width:82px;outline:none;font-family:var(--font);}
+.cf-yr-in:focus{border-color:var(--brand-md);}
+.cf-legend{display:flex;gap:12px;flex-wrap:wrap;}
+.cf-li{display:flex;align-items:center;gap:5px;font-size:.64rem;font-weight:600;color:var(--text2);}
+.cf-ld{width:10px;height:10px;border-radius:2px;}
+.cf-chart{background:var(--white);border:1px solid var(--border);border-radius:var(--r12);padding:18px 20px;margin-bottom:14px;box-shadow:var(--sh1);}
+.cf-chart-title{font-size:.7rem;font-weight:700;color:var(--g900);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;}
+.chart-bars{display:flex;align-items:flex-end;gap:6px;height:120px;}
+.chart-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.chart-col-bars{display:flex;gap:2px;align-items:flex-end;width:100%;justify-content:center;}
+.bar-p{background:var(--brand-dk);border-radius:2px 2px 0 0;min-width:9px;transition:height .4s;}
+.bar-pg{background:var(--emerald);border-radius:2px 2px 0 0;min-width:9px;transition:height .4s;}
+.bar-pend{background:var(--orange);border-radius:2px 2px 0 0;min-width:9px;transition:height .4s;}
+.bar-lbl{font-size:.55rem;font-weight:600;color:var(--g400);margin-top:4px;}
+.cf-scroll{overflow-x:auto;background:var(--white);border:1px solid var(--border);border-radius:var(--r12);box-shadow:var(--sh1);}
+.cf-tbl{width:100%;border-collapse:collapse;min-width:900px;}
+.cf-tbl th{font-size:.62rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:10px 12px;border-bottom:2px solid var(--border);text-align:right;background:var(--g50);white-space:nowrap;}
+.cf-tbl th:first-child{text-align:left;position:sticky;left:0;background:var(--g50);z-index:2;min-width:150px;}
+.cf-tbl td{padding:8px 12px;border-bottom:1px solid var(--border);font-size:.7rem;text-align:right;white-space:nowrap;}
+.cf-tbl td:first-child{text-align:left;position:sticky;left:0;background:var(--white);z-index:1;color:var(--text2);font-weight:500;}
+.cf-tbl tbody tr:hover td{background:#f5f7ff;}
+.cf-tbl tbody tr:hover td:first-child{background:#eef2ff;}
+.cf-presup{color:var(--brand-dk);font-weight:600;}
+.cf-cobrar{color:var(--orange);font-weight:600;}
+.cf-real{color:var(--emerald);font-weight:600;}
+.cf-zero{color:var(--g400);}
+.cf-sep-row td{background:var(--brand-dk)!important;border-top:none!important;padding:7px 12px!important;}
+.cf-sep-row td:first-child{font-size:.65rem;font-weight:700;color:#fff!important;text-transform:uppercase;letter-spacing:.09em;background:var(--brand-dk)!important;}
+.cf-tot-row td{background:var(--g100)!important;border-top:2px solid var(--border)!important;font-weight:700;}
+.cf-tot-row td:first-child{font-size:.68rem;font-weight:700;color:var(--brand-dk);}
+.cf-tot-p{color:var(--brand-dk);font-size:.74rem!important;}
+.cf-tot-c{color:var(--orange);font-size:.74rem!important;}
+.cf-tot-r{color:var(--emerald);font-size:.74rem!important;}
+.cf-acum-row td{background:var(--g50)!important;}
+.cf-acum-row td:first-child{color:var(--text3);font-size:.63rem;font-style:italic;}
+
+/* Toast */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--g900);color:#fff;border-radius:var(--r8);padding:11px 18px;font-size:.75rem;font-weight:600;opacity:0;transform:translateY(8px);transition:all .22s;z-index:999;pointer-events:none;box-shadow:var(--sh3);}
+#toast.show{opacity:1;transform:translateY(0);}
+#toast.err{background:var(--rose);}
+
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--g200);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--g300);}
+</style>
+</head>
+<body>
+
+<div id="loading-overlay">
+  <div class="loader-logo">PROINNOVATE</div>
+  <div class="loader-sub">Panel de Control · Mipymes Digitales</div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-msg" id="loader-msg">Conectando con Google Sheets…</div>
+</div>
+
+<div id="config-banner">
+  <div class="cb-title">⚙ Configuración requerida</div>
+  <div class="cb-body">Ingresa la URL de tu Apps Script.<br><code>https://script.google.com/macros/s/…/exec</code></div>
+  <div class="cb-input-row">
+    <input class="cb-input" type="text" id="script-url-input" placeholder="https://script.google.com/macros/s/…/exec">
+    <button class="cb-btn" onclick="saveScriptUrl()">Conectar</button>
+  </div>
+</div>
+
+<nav class="top-nav">
+  <div class="top-nav-left">
+    <div>
+      <div class="logo">PROINNOVATE</div>
+      <div class="logo-sub">Mipymes Digitales</div>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('proyectos',this)">▦ Proyectos</button>
+    <button class="nav-tab" onclick="showPage('cashflow',this)">▤ Flujo de Caja</button>
+  </div>
+  <div class="top-nav-right">
+    <div class="kpi-nav"><span class="kpi-nav-lbl">Presupuestado</span><span class="kpi-nav-val or" id="stt-presup">S/ 0</span></div>
+    <div class="nav-sep"></div>
+    <div class="kpi-nav"><span class="kpi-nav-lbl">Facturado</span><span class="kpi-nav-val gr" id="stt-factur">S/ 0</span></div>
+    <div class="nav-sep"></div>
+    <div class="sync-pill"><div class="sync-dot" id="sync-dot"></div><span class="sync-lbl" id="sync-label">Sincronizado</span></div>
+    <button class="save-all-btn" id="save-all-btn" onclick="saveAll()">Guardar Todo</button>
+  </div>
+</nav>
+
+<div class="kpi-bar" id="kpi-bar">
+  <div class="kpi-card"><div class="kpi-icon ki-blue">📋</div><div><div class="kpi-val" id="kpi-total">0</div><div class="kpi-lbl">Proyectos totales</div></div></div>
+  <div class="kpi-card"><div class="kpi-icon ki-orange">🔄</div><div><div class="kpi-val" id="kpi-activos">0</div><div class="kpi-lbl">Con avance registrado</div></div></div>
+  <div class="kpi-card"><div class="kpi-icon ki-green">✅</div><div><div class="kpi-val" id="kpi-facturado">S/ 0</div><div class="kpi-lbl">Total facturado</div></div></div>
+  <div class="kpi-card"><div class="kpi-icon ki-amber">⚠</div><div><div class="kpi-val" id="kpi-vencidos">0</div><div class="kpi-lbl">Hitos vencidos</div></div></div>
+</div>
+
+<div class="page active" id="page-proyectos">
+  <div class="toolbar">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="Underdog">Underdog</button>
+    <button class="filter-btn" data-filter="Parking">Parking</button>
+    <button class="filter-btn" data-filter="overdue">⚠ Vencidos</button>
+    <input type="text" class="search-box" id="search" placeholder="Buscar empresa...">
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="page" id="page-cashflow">
+  <div class="cf-top">
+    <div><h2>Flujo de Caja</h2><p>Presupuestado · Facturas pagadas · Pendiente de pago — por mes y empresa</p></div>
+    <div class="cf-ctrl">
+      <span class="cf-yr-lbl">Año:</span>
+      <input type="number" class="cf-yr-in" id="cf-year" value="2026" onchange="renderCashflow()">
+      <div class="cf-legend">
+        <div class="cf-li"><div class="cf-ld" style="background:var(--brand-dk)"></div>Presupuestado</div>
+        <div class="cf-li"><div class="cf-ld" style="background:var(--emerald)"></div>Presup. pagado</div>
+        <div class="cf-li"><div class="cf-ld" style="background:var(--orange)"></div>Presup. pendiente</div>
+        <div class="cf-li"><div class="cf-ld" style="background:var(--emerald);opacity:.6"></div>Facturas pagadas</div>
+        <div class="cf-li"><div class="cf-ld" style="background:var(--orange);opacity:.6"></div>Pend. de pago</div>
+      </div>
+    </div>
+  </div>
+  <div class="cf-chart" id="cf-chart"></div>
+  <div class="cf-scroll"><table class="cf-tbl" id="cf-table"></table></div>
+</div>
+
+<div id="toast">✓ Guardado</div>
+
+<script>
+const HARDCODED_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwt7OnchAmx6kZgr1KKK9FvDIcSXYEZGXIcHitwNkp8gBDLypT4NjHkHd_jHxuSxPIaRg/exec';
+const INITIAL=[
+  {id:1,empresa:'Aline',correo:'NELLYARMAS20@HOTMAIL.COM',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-23',hito3:'2026-06-23',avance:0,resultados:['Alcanzar el 10% de las ventas mensuales totales con el delivery','Aumentar en 15% las visitas diarias en el corto plazo','Incrementar nuestra presencia digital en un 90%'],proyectos:['Base Operativa Digital y Control del Negocio (POS/ERP + Comandas/KDS)','Rentabilidad y Eficiencia Operativa (Inventarios/Mermas + Recetario/Costeo + Control financiero)','Crecimiento Comercial y Gestión Basada en Datos (WhatsApp Business + CRM + Marketing + KPIs)'],facturas:[{presup:21307.20,facturado:21307.20,fechaEsperada:'2026-03-26',fechaEmision:null,fechaPago:null,estado:'Por cobrar'},{presup:12784.32,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:8522.88,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:2,empresa:'Iper Captiva',correo:'',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'',hito3:'',avance:0,resultados:[],proyectos:[],facturas:[{presup:12784.32,facturado:12784.32,fechaEsperada:'2025-11-25',fechaEmision:'2025-11-25',fechaPago:null,estado:'Pagado'},{presup:17045.76,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:12784.33,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:3,empresa:'Monkey Fit',correo:'jose.drago@monkeyfit.co',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-03-13',hito3:'2026-07-13',avance:0,resultados:['Incrementar en un 30% la cantidad de empresas afiliadas durante el 2026.','Aumentar en un 25% la adhesión de colaboradores a través de un agente conversacional.','Expandir la presencia en redes sociales en un 50%.'],proyectos:['Chatbot inteligente en WhatsApp','Campañas de marketing digital','Implementación de sistema ERP modular'],facturas:[{presup:15322.50,facturado:15322.50,fechaEsperada:'2026-02-27',fechaEmision:'2026-02-27',fechaPago:null,estado:'Pagado'},{presup:17045.76,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10246.15,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:4,empresa:'Mauval',correo:'aaguirre@mauvalsac.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-10',hito3:'2026-09-10',avance:0,resultados:['Canales digitales implementados: web 100% operativa, 10% ventas desde canal digital, +30% en ventas.','Estrategia de marketing digital que expande cobertura a 30% más distritos de Lima.','Personal capacitado en herramientas de marketing digital.'],proyectos:['Implementación de módulo de CRM','Marketing Digital y Diseño + activos digitales','Implementación de módulo de MRP','Métricas de control de objetivos'],facturas:[{presup:21307.18,facturado:21307.18,fechaEsperada:'2026-03-27',fechaEmision:null,fechaPago:null,estado:'Pagado'},{presup:4358.05,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4358.05,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:12591.10,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:5,empresa:'Umana',correo:'Nicolas.larosa.peron@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-23',hito3:'2026-09-23',avance:0,resultados:['Reducción del 30% en tareas manuales con módulo ERP.','Satisfacción del cliente mínimo 85%.','Procesos comerciales automatizados al 100%.','Personal con capacidades tecnológicas fortalecidas.','Control de indicadores financieros en tiempo real.'],proyectos:['Implementación de ERP + PROYECTOS + CRM','Marketing Digital','Rediseño Página Web + SEO + Analytics + FB','Auditoría Manual de Marca'],facturas:[{presup:21910.25,facturado:21910.25,fechaEsperada:'2026-02-25',fechaEmision:'2026-02-25',fechaPago:null,estado:'Pagado'},{presup:12784.50,facturado:null,fechaEsperada:'2026-04-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:7920.26,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:6,empresa:'Hidropónika',correo:'gaby.rodriguez.larrain.s@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'2026-03-01',hito3:'2026-07-01',avance:50,resultados:['Plataforma para centralizar mensajes de todos los canales digitales.','Plataforma para la digitalización de cursos.','Reducción en un 50% del tiempo en errores o actividades manuales.'],proyectos:['ERP integral: Compras, Producción, Ventas, Inventario, CRM y facturación','Implementación CRM Conversacional','Implementación de sistema LMS','Asistencia técnica: Tag Manager y Google Analytics'],facturas:[{presup:23700,facturado:23700,fechaEsperada:'2024-12-10',fechaEmision:'2024-12-10',fechaPago:null,estado:'Pagado'},{presup:10653.60,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:8251.41,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:7,empresa:'Mavesco',correo:'floyd.scofield@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'2026-05-23',hito3:'2026-09-23',avance:0,resultados:['Incrementar ventas a través de la página en un 40%.','Presencia en todas las redes sociales al 100%.','Aumentar el tráfico web en un 70%.'],proyectos:['Implementación de módulo ERP + Conectores','Implementación de módulo MRP + CRM','Métricas de control de objetivos','Marketing Digital y Diseño'],facturas:[{presup:23728.81,facturado:0,fechaEsperada:'2026-03-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:3510.89,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:5205.81,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10169.05,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:8,empresa:'Fesca',correo:'PATTY_DC@HOTMAIL.COM',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-29',hito3:'2026-07-09',avance:0,resultados:['Producción más controlada con procesos estandarizados que reduzcan la variabilidad entre lotes.','Adopción de tecnologías de automatización para decisiones en tiempo real y mayor eficiencia.'],proyectos:['Desarrollo de plataforma gamificada web/móvil "Samba"','Diseño e implementación de página web + e-commerce','Implementación de sistema ERP modular'],facturas:[{presup:22000,facturado:22000,fechaEsperada:'2026-03-04',fechaEmision:'2026-03-04',fechaPago:null,estado:'Pagado'},{presup:12784.32,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:7830.08,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:9,empresa:'Map Salud',correo:'jorgebado@mapsalud.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-03-13',hito3:'2026-07-13',avance:30,resultados:['Incrementar en un 40% la base de usuarios activos.','Ampliar la red de aseguradoras y centros médicos en un 25%.','Reducir en un 30% los tiempos de espera para consultas virtuales.','Implementar módulos de seguimiento de salud y bienestar corporativo.'],proyectos:['Implementación de ERP + PROYECTOS + CRM + CONECTOR ERP-JIRA','Marketing Digital'],facturas:[{presup:10792.62,facturado:10792.62,fechaEsperada:'2026-01-29',fechaEmision:'2026-01-29',fechaPago:null,estado:'Pagado'},{presup:11285.71,facturado:11285.71,fechaEsperada:'2026-01-29',fechaEmision:'2026-01-29',fechaPago:null,estado:'Pagado'},{presup:12784.50,facturado:null,fechaEsperada:'2026-04-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:7752.18,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:10,empresa:'DL Varkoo',correo:'avargas140364@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'2026-05-01',hito3:'2026-09-01',avance:0,resultados:['Plataforma centralizada que unifique información de distintas áreas.','Área de marketing digital fortalecida para captación y fidelización de clientes.','Dashboard de KPIs financieros para monitoreo en tiempo real.','Sistema integrado con módulos existentes para mayor eficiencia operativa.'],proyectos:['Implementación de módulo ERP Restaurante','Implementación de Marketing Digital','Rediseño de Página Web','Auditoría Buyer Persona'],facturas:[{presup:21306.78,facturado:21306.78,fechaEsperada:'2026-03-24',fechaEmision:'2026-03-24',fechaPago:null,estado:'Pagado'},{presup:6781.10,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4357.63,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10169.49,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:11,empresa:'VK Studio',correo:'',primerD:'Pendiente',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-06-17',hito3:'2026-11-02',avance:0,resultados:['Incrementar las ventas mensuales en un 30% mediante integración de plataformas de comercio.','Aumentar en un 20% la tasa de conversión de pedidos digitales.','Expandir la presencia en redes sociales en un 50%.','App móvil propia con al menos 5,000 descargas en los primeros 6 meses.'],proyectos:['Implementación de módulo ERP + RRHH','Implementación de CRM','Implementación de Elearning','Marketing Digital y Diseño'],facturas:[{presup:23728.81,facturado:0,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por facturar'},{presup:4358.35,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4358.35,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10168.50,facturado:null,fechaEsperada:'2026-08-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+];
+const EF=['Pendiente','Por emitir','Por cobrar','Pagado','Por facturar'];
+const ED=['Desembolsado','Pendiente','En proceso','Diagnóstico'];
+const URL_KEY='proinnovate_script_url';
+const MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+let projects=[],curFilter='all',expandedCards=new Set();
+const today=new Date();today.setHours(0,0,0,0);
+function dc(ds){if(!ds)return'';const d=new Date(ds+'T00:00:00');const diff=(d-today)/86400000;if(diff<0)return'hito-overdue';if(diff<=14)return'hito-soon';return'';}
+function fmt(n){if(n===null||n===undefined||n==='')return'—';return'S/ '+Number(n).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtK(n){if(!n)return'S/ 0';const v=Number(n);if(v>=1000000)return'S/ '+(v/1000000).toFixed(1)+'M';if(v>=1000)return'S/ '+(v/1000).toFixed(1)+'K';return'S/ '+v.toLocaleString('es-PE',{minimumFractionDigits:0});}
+function epC(e){const m={'Pagado':'ep-pagado','Pendiente':'ep-pendiente','Por emitir':'ep-poremitir','Por cobrar':'ep-porcobrar','Por facturar':'ep-porfacturar'};return m[e]||'ep-poremitir';}
+function implC(v){if(v==='Underdog')return'bi-underdog';if(v==='Parking')return'bi-parking';return'bi-none';}
+function dC(v){if(v==='Desembolsado')return'bd-ok';if(v==='Diagnóstico')return'bd-diag';return'bd-pend';}
+function tP(p){return p.facturas.reduce((s,f)=>s+Number(f.presup||0),0);}
+function tF(p){return p.facturas.reduce((s,f)=>s+Number(f.facturado||0),0);}
+function setSS(state,msg){const d=document.getElementById('sync-dot'),l=document.getElementById('sync-label');d.className='sync-dot'+(state==='syncing'?' syncing':state==='error'?' error':'');l.textContent=msg;}
+function getURL(){return HARDCODED_SCRIPT_URL||localStorage.getItem(URL_KEY)||'';}
+function saveScriptUrl(){const url=document.getElementById('script-url-input').value.trim();if(!url||!url.startsWith('https://script.google.com')){alert('URL inválida');return;}localStorage.setItem(URL_KEY,url);document.getElementById('config-banner').classList.remove('show');loadFromSheets();}
+async function loadFromSheets(){
+  const url=getURL();setLM('Conectando con Google Sheets…');
+  if(!url){projects=JSON.parse(JSON.stringify(INITIAL));renderAll();hideLoader();document.getElementById('config-banner').classList.add('show');setSS('error','Sin configurar');return;}
+  try{setLM('Cargando datos…');const res=await fetch(url,{method:'GET',redirect:'follow'});const data=await res.json();
+    if(data.status==='ok'&&data.projects&&data.projects.length>0){projects=data.projects;setSS('ok','Sincronizado');}
+    else{projects=JSON.parse(JSON.stringify(INITIAL));setSS('ok','Datos iniciales');await push();}
+  }catch(e){projects=JSON.parse(JSON.stringify(INITIAL));setSS('error','Sin conexión');showToast('Sin conexión con Google Sheets',true);}
+  renderAll();hideLoader();
+}
+async function push(){
+  const url=getURL();if(!url)return false;setSS('syncing','Guardando…');
+  try{const res=await fetch(url,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain'},body:JSON.stringify({projects})});const data=await res.json();
+    if(data.status==='ok'){setSS('ok','Guardado · '+new Date().toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit'}));return true;}
+    setSS('error','Error al guardar');return false;
+  }catch(e){setSS('error','Sin conexión');return false;}
+}
+function setLM(m){document.getElementById('loader-msg').textContent=m;}
+function hideLoader(){const ol=document.getElementById('loading-overlay');ol.classList.add('hidden');setTimeout(()=>ol.style.display='none',500);}
+
+function renderCard(p){
+  const tp=tP(p),tf=tF(p),avp=Math.min(100,Math.max(0,Number(p.avance)||0));
+  const fr=p.facturas.map((f,i)=>`<tr>
+    <td class="fact-num">F${i+1}</td>
+    <td><input class="fact-in" type="number" min="0" step="0.01" value="${f.presup||0}" onchange="uF(${p.id},${i},'presup',this.value)"></td>
+    <td><input class="fact-in" type="number" min="0" step="0.01" value="${f.facturado===null?'':f.facturado}" placeholder="—" onchange="uF(${p.id},${i},'facturado',this.value)"></td>
+    <td><input class="fact-dt" type="date" value="${f.fechaEsperada||''}" onchange="uF(${p.id},${i},'fechaEsperada',this.value)"></td>
+    <td><input class="fact-dt" type="date" value="${f.fechaEmision||''}" onchange="uF(${p.id},${i},'fechaEmision',this.value)"></td>
+    <td><input class="fact-dt" type="date" value="${f.fechaPago||''}" onchange="uF(${p.id},${i},'fechaPago',this.value)"></td>
+    <td><select class="fact-sel" onchange="uF(${p.id},${i},'estado',this.value);uPill(this)">${EF.map(e=>`<option${e===f.estado?' selected':''}>${e}</option>`).join('')}</select></td>
+    <td><span class="ep ${epC(f.estado)}" id="pill-${p.id}-${i}">${f.estado}</span></td>
+  </tr>`).join('');
+  const res=p.resultados.length?p.resultados.map((r,i)=>`<div class="res-item"><span class="res-num">R${i+1}</span><span class="res-text">${r}</span></div>`).join(''):'<span style="font-size:.7rem;color:var(--text4)">Sin resultados registrados</span>';
+  const proj=p.proyectos.length?p.proyectos.map(x=>`<div class="proj-chip">${x}</div>`).join(''):'<span style="font-size:.7rem;color:var(--text4)">Sin proyectos registrados</span>';
+  return `<div class="card" id="card-${p.id}">
+  <div class="card-stripe"></div>
+  <div class="card-top" onclick="toggle(${p.id})">
+    <div class="card-title-col"><div class="card-empresa">${p.empresa}</div>${p.correo?`<div class="card-correo">${p.correo}</div>`:''}</div>
+    <div class="card-badges">${p.implementadora?`<span class="badge ${implC(p.implementadora)}">${p.implementadora}</span>`:''}<span class="badge ${dC(p.primerD)}">${p.primerD}</span></div>
+    <span class="chevron">▼</span>
+  </div>
+  <div class="prog-row">
+    <div class="prog-label"><span>Avance del proyecto</span><span class="pct">${avp}%</span></div>
+    <div class="prog-track"><div class="prog-fill" style="width:${avp}%"></div></div>
+  </div>
+  <div class="hitos-row">
+    <div class="hito-box ${dc(p.hito2)}" id="h2-${p.id}"><div class="hito-label">Hito 2${dc(p.hito2)==='hito-overdue'?' ⚠ Vencido':''}</div><input type="date" value="${p.hito2||''}" onchange="uField(${p.id},'hito2',this.value);rHito(${p.id},'hito2',this.value)"></div>
+    <div class="hito-box ${dc(p.hito3)}" id="h3-${p.id}"><div class="hito-label">Hito 3${dc(p.hito3)==='hito-overdue'?' ⚠ Vencido':''}</div><input type="date" value="${p.hito3||''}" onchange="uField(${p.id},'hito3',this.value);rHito(${p.id},'hito3',this.value)"></div>
+  </div>
+  <div class="billing-mini">
+    <div class="bm-box bm-presup"><div class="bm-label">Total Presupuestado</div><div class="bm-value" id="bmp-${p.id}">${fmt(tp)}</div></div>
+    <div class="bm-box bm-factur"><div class="bm-label">Total Facturado</div><div class="bm-value" id="bmf-${p.id}">${fmt(tf)}</div></div>
+  </div>
+  <div class="card-body">
+    <div class="section">
+      <div class="sec-title">Desembolsos e implementadora</div>
+      <div class="fg fg3">
+        <div class="field"><label>Primer Desembolso</label><select onchange="uField(${p.id},'primerD',this.value)">${ED.map(v=>`<option${v===p.primerD?' selected':''}>${v}</option>`).join('')}</select></div>
+        <div class="field"><label>Segundo Desembolso</label><select onchange="uField(${p.id},'segundoD',this.value)">${ED.map(v=>`<option${v===p.segundoD?' selected':''}>${v}</option>`).join('')}</select></div>
+        <div class="field"><label>Empresa Implementadora</label><input type="text" value="${p.implementadora||''}" onchange="uField(${p.id},'implementadora',this.value)"></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="sec-title">Porcentaje de avance</div>
+      <div class="av-row"><input type="range" min="0" max="100" step="5" value="${avp}" oninput="syncAv(${p.id},this.value)"><input type="number" min="0" max="100" value="${avp}" id="avn-${p.id}" onchange="syncAv(${p.id},this.value)"><span>%</span></div>
+    </div>
+    <div class="section"><div class="sec-title">Resultados esperados</div><div class="res-list">${res}</div></div>
+    <div class="section"><div class="sec-title">Proyectos a implementar</div><div class="proj-grid">${proj}</div></div>
+    <div class="section">
+      <div class="sec-title">Facturas</div>
+      <div class="fact-wrap">
+        <table class="fact-tbl">
+          <thead><tr><th>#</th><th>Presupuestado</th><th>Facturado</th><th>F. Esperada</th><th>F. Emisión</th><th>F. Pago</th><th>Estado</th><th></th></tr></thead>
+          <tbody>${fr}</tbody>
+          <tfoot><tr class="fact-tot-row"><td>TOTAL</td><td id="tp-${p.id}">${fmt(tp)}</td><td id="tf-${p.id}">${fmt(tf)}</td><td colspan="5"></td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+    <button class="save-btn" id="scb-${p.id}" onclick="saveCard(${p.id})">Guardar cambios</button>
+  </div>
+</div>`;
+}
+
+function renderAll(){
+  const s=document.getElementById('search').value.toLowerCase();
+  const f=projects.filter(p=>{
+    if(!p.empresa.toLowerCase().includes(s))return false;
+    if(curFilter==='Underdog')return p.implementadora==='Underdog';
+    if(curFilter==='Parking')return p.implementadora==='Parking';
+    if(curFilter==='overdue')return(p.hito2&&new Date(p.hito2)<today)||(p.hito3&&new Date(p.hito3)<today);
+    return true;
+  });
+  document.getElementById('grid').innerHTML=f.map(renderCard).join('');
+  f.forEach(p=>{if(expandedCards.has(p.id))document.getElementById('card-'+p.id)?.classList.add('expanded');});
+  updateStats();
+}
+function toggle(id){const c=document.getElementById('card-'+id);if(!c)return;c.classList.toggle('expanded');if(c.classList.contains('expanded'))expandedCards.add(id);else expandedCards.delete(id);}
+function uField(id,f,v){const p=projects.find(x=>x.id===id);if(p)p[f]=v;}
+function rHito(id,f,v){const bid=(f==='hito2'?'h2-':'h3-')+id;const box=document.getElementById(bid);if(!box)return;const cls=dc(v);box.className='hito-box '+cls;const lbl=box.querySelector('.hito-label');if(lbl)lbl.textContent=(f==='hito2'?'Hito 2':'Hito 3')+(cls==='hito-overdue'?' ⚠ Vencido':'');}
+function uF(id,fi,field,val){
+  const p=projects.find(x=>x.id===id);if(!p)return;
+  const f=p.facturas[fi];f[field]=(field==='presup'||field==='facturado')?(val===''?null:parseFloat(val)||0):(val||null);
+  const tp=tP(p),tf=tF(p);
+  [['tp-',tp],['tf-',tf],['bmp-',tp],['bmf-',tf]].forEach(([pfx,v])=>{const el=document.getElementById(pfx+id);if(el)el.textContent=fmt(v);});
+  updateStats();
+}
+function uPill(sel){const pill=sel.closest('tr')?.querySelector('.ep');if(!pill)return;pill.className='ep '+epC(sel.value);pill.textContent=sel.value;}
+function syncAv(id,val){const v=Math.min(100,Math.max(0,Number(val)||0));const p=projects.find(x=>x.id===id);if(p)p.avance=v;const card=document.getElementById('card-'+id);if(!card)return;const range=card.querySelector('input[type=range]');const num=document.getElementById('avn-'+id);if(range)range.value=v;if(num)num.value=v;const fill=card.querySelector('.prog-fill');const pct=card.querySelector('.pct');if(fill)fill.style.width=v+'%';if(pct)pct.textContent=v+'%';}
+async function saveCard(id){
+  const btn=document.getElementById('scb-'+id);btn.textContent='Guardando…';btn.className='save-btn saving';
+  const ok=await push();btn.textContent=ok?'✓ Guardado':'✗ Error de conexión';btn.className='save-btn '+(ok?'saved':'error');
+  if(ok)showToast('✓ Guardado en Google Sheets');else showToast('Sin conexión. Verifica internet.',true);
+  setTimeout(()=>{btn.textContent='Guardar cambios';btn.className='save-btn';},2800);
+}
+async function saveAll(){
+  const btn=document.getElementById('save-all-btn');btn.textContent='Guardando…';btn.disabled=true;
+  const ok=await push();btn.textContent=ok?'✓ Guardado':'Error';
+  if(ok)showToast('✓ Todo guardado en Google Sheets');else showToast('Sin conexión',true);
+  setTimeout(()=>{btn.textContent='Guardar Todo';btn.disabled=false;},2000);
+}
+function updateStats(){
+  const tp=projects.reduce((s,p)=>s+tP(p),0),tf=projects.reduce((s,p)=>s+tF(p),0);
+  const activos=projects.filter(p=>p.avance>0).length;
+  const vencidos=projects.filter(p=>(p.hito2&&new Date(p.hito2)<today)||(p.hito3&&new Date(p.hito3)<today)).length;
+  document.getElementById('stt-presup').textContent=fmtK(tp);
+  document.getElementById('stt-factur').textContent=fmtK(tf);
+  document.getElementById('kpi-total').textContent=projects.length;
+  document.getElementById('kpi-activos').textContent=activos;
+  document.getElementById('kpi-facturado').textContent=fmtK(tf);
+  const kv=document.getElementById('kpi-vencidos');kv.textContent=vencidos;
+  kv.style.color=vencidos>0?'var(--red)':'var(--text)';
+}
+function showToast(msg,err=false){const t=document.getElementById('toast');t.textContent=msg;t.className='show'+(err?' err':'');setTimeout(()=>t.className='',2500);}
+document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');curFilter=this.dataset.filter;renderAll();});});
+document.getElementById('search').addEventListener('input',renderAll);
+function showPage(name,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');btn.classList.add('active');if(name==='cashflow')renderCashflow();}
+
+function buildCF(year){
+  return projects.map(p=>{
+    const m=Array.from({length:12},()=>({presup:0,pagado:0,pendiente:0}));
+    p.facturas.forEach(f=>{
+      if(f.presup>0&&f.fechaEsperada){const d=new Date(f.fechaEsperada+'T00:00:00');if(d.getFullYear()===year)m[d.getMonth()].presup+=Number(f.presup)||0;}
+      if(f.facturado>0&&f.fechaPago&&f.estado==='Pagado'){const d=new Date(f.fechaPago+'T00:00:00');if(d.getFullYear()===year)m[d.getMonth()].pagado+=Number(f.facturado)||0;}
+      if(f.facturado>0&&f.fechaEmision&&!f.fechaPago&&f.estado!=='Pagado'){const d=new Date(f.fechaEmision+'T00:00:00');if(d.getFullYear()===year)m[d.getMonth()].pendiente+=Number(f.facturado)||0;}
+      if(f.presup>0&&f.estado==='Por cobrar'&&f.fechaEsperada&&!f.fechaEmision){const d=new Date(f.fechaEsperada+'T00:00:00');if(d.getFullYear()===year)m[d.getMonth()].pendiente+=Number(f.presup)||0;}
+    });
+    return {empresa:p.empresa,m};
+  }).filter(r=>r.m.some(x=>x.presup>0||x.pagado>0||x.pendiente>0));
+}
+function renderCashflow(){
+  const year=parseInt(document.getElementById('cf-year').value)||2026;
+  const data=buildCF(year);
+  const tP2=Array(12).fill(0),tPg=Array(12).fill(0),tPend=Array(12).fill(0);
+  data.forEach(r=>r.m.forEach((x,i)=>{tP2[i]+=x.presup;tPg[i]+=x.pagado;tPend[i]+=x.pendiente;}));
+  const mx=Math.max(...tP2,...tPg,...tPend,1);
+  const bars=Array.from({length:12},(_,i)=>{
+    const hp=Math.round((tP2[i]/mx)*110),hpg=Math.round((tPg[i]/mx)*110),hpend=Math.round((tPend[i]/mx)*110);
+    const has=tP2[i]>0||tPg[i]>0||tPend[i]>0;
+    return `<div class="chart-col"><div class="chart-col-bars">
+      <div class="bar-p" style="height:${hp}px;width:10px" title="Presupuestado: S/ ${tP2[i].toFixed(0)}"></div>
+      <div class="bar-pg" style="height:${hpg}px;width:10px" title="Pagado: S/ ${tPg[i].toFixed(0)}"></div>
+      <div class="bar-pend" style="height:${hpend}px;width:10px" title="Pendiente: S/ ${tPend[i].toFixed(0)}"></div>
+    </div><div class="bar-lbl" style="${has?'':'opacity:.3'}">M${i+1}</div></div>`;
+  }).join('');
+  document.getElementById('cf-chart').innerHTML=`<div class="cf-chart-title">Facturación ${year} — Presupuestado · Pagado · Pendiente de pago</div><div class="chart-bars">${bars}</div>`;
+  const mh=Array.from({length:12},(_,i)=>`<th>M${i+1}<br><span style="font-size:.5rem;font-weight:400">${MN[i]}</span></th>`).join('');
+  function rows(data,f,cls){return data.map(r=>{const cells=r.m.map(x=>x[f]>0?`<td class="${cls}">S/ ${x[f].toLocaleString('es-PE',{minimumFractionDigits:0,maximumFractionDigits:0})}</td>`:`<td class="cf-zero">—</td>`).join('');return `<tr><td>${r.empresa}</td>${cells}</tr>`;}).join('');}
+  // Presupuestado con color según estado del mes
+  function rowsPresup(data){return data.map(r=>{const cells=r.m.map(x=>{if(x.presup<=0)return`<td class="cf-zero">—</td>`;const v='S/ '+x.presup.toLocaleString('es-PE',{minimumFractionDigits:0,maximumFractionDigits:0});if(x.pagado>0)return`<td class="cf-presup-pagado" title="Incluye facturas pagadas">${v}</td>`;if(x.pendiente>0)return`<td class="cf-presup-pendiente" title="Incluye facturas emitidas pendientes">${v}</td>`;return`<td class="cf-presup">${v}</td>`;}).join('');return `<tr><td>${r.empresa}</td>${cells}</tr>`;}).join('');}
+  function tC(tots,cls){return tots.map(v=>v>0?`<td class="${cls}">S/ ${v.toLocaleString('es-PE',{minimumFractionDigits:0})}</td>`:`<td class="cf-zero">—</td>`).join('');}
+  function aC(tots,cls){let a=0;return tots.map(v=>{a+=v;return a>0?`<td class="${cls}" style="opacity:.7">S/ ${a.toLocaleString('es-PE',{minimumFractionDigits:0})}</td>`:`<td class="cf-zero">—</td>`;}).join('');}
+  document.getElementById('cf-table').innerHTML=`
+    <thead><tr><th>Empresa</th>${mh}</tr></thead>
+    <tbody>
+      <tr class="cf-sep-row"><td colspan="13">Presupuestado a facturar</td></tr>
+      ${rowsPresup(data)}
+      <tr class="cf-tot-row"><td>TOTAL PRESUPUESTADO</td>${tC(tP2,'cf-tot-p')}</tr>
+      <tr class="cf-acum-row"><td>Acumulado presupuestado</td>${aC(tP2,'cf-presup')}</tr>
+      <tr class="cf-sep-row"><td colspan="13">Facturas pagadas</td></tr>
+      ${rows(data,'pagado','cf-real')}
+      <tr class="cf-tot-row"><td>TOTAL PAGADO</td>${tC(tPg,'cf-tot-r')}</tr>
+      <tr class="cf-acum-row"><td>Acumulado pagado</td>${aC(tPg,'cf-real')}</tr>
+      <tr class="cf-sep-row"><td colspan="13">Facturas emitidas pendientes de pago</td></tr>
+      ${rows(data,'pendiente','cf-cobrar')}
+      <tr class="cf-tot-row"><td>TOTAL PENDIENTE DE PAGO</td>${tC(tPend,'cf-tot-c')}</tr>
+      <tr class="cf-acum-row"><td>Acumulado pendiente de pago</td>${aC(tPend,'cf-cobrar')}</tr>
+    </tbody>`;
+}
+loadFromSheets();
+</script>
+</body>
+</html>
