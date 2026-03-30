@@ -275,6 +275,103 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--g200);border-radius:3px;}
 ::-webkit-scrollbar-thumb:hover{background:var(--g300);}
+
+/* ── DASHBOARD ──────────────────────────────────────────────── */
+.db-header{margin-bottom:18px;}
+.db-title{font-size:1.15rem;font-weight:800;color:var(--g900);letter-spacing:-.02em;}
+.db-sub{font-size:.72rem;color:var(--text3);margin-top:3px;}
+
+.db-kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px;}
+@media(max-width:1200px){.db-kpi-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:700px){.db-kpi-grid{grid-template-columns:repeat(2,1fr);}}
+
+.db-kpi-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r12);padding:16px;display:flex;align-items:center;gap:12px;box-shadow:var(--sh1);}
+.db-kpi-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.db-kpi-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
+.db-kpi-val{font-size:1.15rem;font-weight:800;color:var(--g900);line-height:1.1;}
+.db-kpi-lbl{font-size:.6rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-top:2px;}
+
+.db-row2{display:grid;grid-template-columns:1fr 380px;gap:14px;margin-bottom:14px;}
+@media(max-width:1000px){.db-row2{grid-template-columns:1fr;}}
+
+.db-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--r12);padding:18px 20px;box-shadow:var(--sh1);}
+.db-panel-lg{flex:1;}
+.db-panel-title{font-size:.72rem;font-weight:700;color:var(--g900);text-transform:uppercase;letter-spacing:.09em;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+
+/* Avance list */
+.db-avance-item{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.db-avance-item:last-child{margin-bottom:0;}
+.db-avance-name{font-size:.76rem;font-weight:600;color:var(--text2);min-width:110px;max-width:110px;}
+.db-avance-track{flex:1;height:8px;background:var(--g100);border-radius:4px;overflow:hidden;}
+.db-avance-fill{height:100%;border-radius:4px;transition:width .6s ease;}
+.db-avance-pct{font-size:.72rem;font-weight:700;min-width:36px;text-align:right;}
+
+/* Donut */
+.db-donut-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.db-donut{width:110px;height:110px;flex-shrink:0;}
+.db-donut-legend{display:flex;flex-direction:column;gap:7px;}
+.db-legend-item{display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text2);}
+.db-legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+.db-legend-val{font-weight:700;margin-left:auto;padding-left:8px;}
+
+/* Horizontal bars */
+.db-bar-item{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+.db-bar-item:last-child{margin-bottom:0;}
+.db-bar-name{font-size:.72rem;font-weight:500;color:var(--text2);min-width:90px;max-width:90px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.db-bar-track{flex:1;height:22px;background:var(--g100);border-radius:var(--r4);overflow:hidden;position:relative;}
+.db-bar-fill{height:100%;border-radius:var(--r4);display:flex;align-items:center;padding-left:8px;transition:width .6s ease;}
+.db-bar-fill span{font-size:.65rem;font-weight:700;color:#fff;white-space:nowrap;}
+.db-bar-val{font-size:.68rem;font-weight:700;color:var(--text2);min-width:80px;text-align:right;}
+
+/* Hitos list */
+.db-hito-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--g100);}
+.db-hito-item:last-child{border-bottom:none;}
+.db-hito-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.db-hito-info{flex:1;min-width:0;}
+.db-hito-empresa{font-size:.74rem;font-weight:700;color:var(--text);}
+.db-hito-desc{font-size:.65rem;color:var(--text3);margin-top:1px;}
+.db-hito-date{font-size:.65rem;font-weight:600;flex-shrink:0;}
+
+/* Fact estado */
+.db-fact-estado{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.db-fest-item{background:var(--g50);border-radius:var(--r8);padding:12px 14px;border:1px solid var(--border);}
+.db-fest-val{font-size:1.4rem;font-weight:800;color:var(--g900);line-height:1;}
+.db-fest-lbl{font-size:.62rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px;}
+.db-fest-amount{font-size:.72rem;font-weight:600;color:var(--text2);margin-top:4px;}
+
+/* Implementadora */
+.db-impl-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--g100);}
+.db-impl-item:last-child{border-bottom:none;}
+.db-impl-badge{font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:12px;flex-shrink:0;}
+.db-impl-count{font-size:1.1rem;font-weight:800;color:var(--g900);margin-left:auto;}
+.db-impl-sub{font-size:.65rem;color:var(--text3);}
+
+
+/* Hito presentado check */
+.hito-check-row{display:flex;align-items:center;gap:6px;margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,0,0,.06);}
+.hito-check-row input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--emerald);}
+.hito-check-label{font-size:.62rem;font-weight:600;color:var(--text3);}
+.hito-check-row.checked .hito-check-label{color:var(--emerald);}
+
+/* Dashboard desembolsos table */
+.db-desemb-table{width:100%;border-collapse:collapse;}
+.db-desemb-table th{font-size:.6rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;border-bottom:2px solid var(--border);text-align:left;background:var(--g50);}
+.db-desemb-table td{font-size:.74rem;padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.db-desemb-table tr:last-child td{border-bottom:none;}
+.db-desemb-table tr:hover td{background:var(--g50);}
+.db-pill{display:inline-flex;align-items:center;gap:4px;font-size:.62rem;font-weight:700;padding:2px 9px;border-radius:12px;}
+.dp-ok{background:var(--emerald-lt);color:var(--emerald);}
+.dp-pend{background:var(--amber-lt);color:var(--amber);}
+.dp-proceso{background:var(--brand-lt);color:var(--brand);}
+
+/* Dashboard hitos presentados */
+.db-hito-pres-table{width:100%;border-collapse:collapse;}
+.db-hito-pres-table th{font-size:.6rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;border-bottom:2px solid var(--border);text-align:left;background:var(--g50);}
+.db-hito-pres-table td{font-size:.74rem;padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.db-hito-pres-table tr:last-child td{border-bottom:none;}
+.db-hito-pres-table tr:hover td{background:var(--g50);}
+.db-check-icon{font-size:.9rem;}
+
 </style>
 </head>
 <body>
@@ -305,6 +402,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('proyectos',this)">▦ Proyectos</button>
     <button class="nav-tab" onclick="showPage('cashflow',this)">▤ Flujo de Caja</button>
+    <button class="nav-tab" onclick="showPage('dashboard',this)">◈ Dashboard</button>
   </div>
   <div class="top-nav-right">
     <div class="kpi-nav"><span class="kpi-nav-lbl">Presupuestado</span><span class="kpi-nav-val or" id="stt-presup">S/ 0</span></div>
@@ -358,17 +456,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 <script>
 const HARDCODED_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwt7OnchAmx6kZgr1KKK9FvDIcSXYEZGXIcHitwNkp8gBDLypT4NjHkHd_jHxuSxPIaRg/exec';
 const INITIAL=[
-  {id:1,empresa:'Aline',correo:'NELLYARMAS20@HOTMAIL.COM',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-23',hito3:'2026-06-23',avance:0,resultados:['Alcanzar el 10% de las ventas mensuales totales con el delivery','Aumentar en 15% las visitas diarias en el corto plazo','Incrementar nuestra presencia digital en un 90%'],proyectos:['Base Operativa Digital y Control del Negocio (POS/ERP + Comandas/KDS)','Rentabilidad y Eficiencia Operativa (Inventarios/Mermas + Recetario/Costeo + Control financiero)','Crecimiento Comercial y Gestión Basada en Datos (WhatsApp Business + CRM + Marketing + KPIs)'],facturas:[{presup:21307.20,facturado:21307.20,fechaEsperada:'2026-03-26',fechaEmision:null,fechaPago:null,estado:'Por cobrar'},{presup:12784.32,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:8522.88,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
-  {id:2,empresa:'Iper Captiva',correo:'',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'',hito3:'',avance:0,resultados:[],proyectos:[],facturas:[{presup:12784.32,facturado:12784.32,fechaEsperada:'2025-11-25',fechaEmision:'2025-11-25',fechaPago:null,estado:'Pagado'},{presup:17045.76,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:12784.33,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
-  {id:3,empresa:'Monkey Fit',correo:'jose.drago@monkeyfit.co',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-03-13',hito3:'2026-07-13',avance:0,resultados:['Incrementar en un 30% la cantidad de empresas afiliadas durante el 2026.','Aumentar en un 25% la adhesión de colaboradores a través de un agente conversacional.','Expandir la presencia en redes sociales en un 50%.'],proyectos:['Chatbot inteligente en WhatsApp','Campañas de marketing digital','Implementación de sistema ERP modular'],facturas:[{presup:15322.50,facturado:15322.50,fechaEsperada:'2026-02-27',fechaEmision:'2026-02-27',fechaPago:null,estado:'Pagado'},{presup:17045.76,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10246.15,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
-  {id:4,empresa:'Mauval',correo:'aaguirre@mauvalsac.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-10',hito3:'2026-09-10',avance:0,resultados:['Canales digitales implementados: web 100% operativa, 10% ventas desde canal digital, +30% en ventas.','Estrategia de marketing digital que expande cobertura a 30% más distritos de Lima.','Personal capacitado en herramientas de marketing digital.'],proyectos:['Implementación de módulo de CRM','Marketing Digital y Diseño + activos digitales','Implementación de módulo de MRP','Métricas de control de objetivos'],facturas:[{presup:21307.18,facturado:21307.18,fechaEsperada:'2026-03-27',fechaEmision:null,fechaPago:null,estado:'Pagado'},{presup:4358.05,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4358.05,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:12591.10,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
-  {id:5,empresa:'Umana',correo:'Nicolas.larosa.peron@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-23',hito3:'2026-09-23',avance:0,resultados:['Reducción del 30% en tareas manuales con módulo ERP.','Satisfacción del cliente mínimo 85%.','Procesos comerciales automatizados al 100%.','Personal con capacidades tecnológicas fortalecidas.','Control de indicadores financieros en tiempo real.'],proyectos:['Implementación de ERP + PROYECTOS + CRM','Marketing Digital','Rediseño Página Web + SEO + Analytics + FB','Auditoría Manual de Marca'],facturas:[{presup:21910.25,facturado:21910.25,fechaEsperada:'2026-02-25',fechaEmision:'2026-02-25',fechaPago:null,estado:'Pagado'},{presup:12784.50,facturado:null,fechaEsperada:'2026-04-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:7920.26,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
-  {id:6,empresa:'Hidropónika',correo:'gaby.rodriguez.larrain.s@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'2026-03-01',hito3:'2026-07-01',avance:50,resultados:['Plataforma para centralizar mensajes de todos los canales digitales.','Plataforma para la digitalización de cursos.','Reducción en un 50% del tiempo en errores o actividades manuales.'],proyectos:['ERP integral: Compras, Producción, Ventas, Inventario, CRM y facturación','Implementación CRM Conversacional','Implementación de sistema LMS','Asistencia técnica: Tag Manager y Google Analytics'],facturas:[{presup:23700,facturado:23700,fechaEsperada:'2024-12-10',fechaEmision:'2024-12-10',fechaPago:null,estado:'Pagado'},{presup:10653.60,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:8251.41,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
-  {id:7,empresa:'Mavesco',correo:'floyd.scofield@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'2026-05-23',hito3:'2026-09-23',avance:0,resultados:['Incrementar ventas a través de la página en un 40%.','Presencia en todas las redes sociales al 100%.','Aumentar el tráfico web en un 70%.'],proyectos:['Implementación de módulo ERP + Conectores','Implementación de módulo MRP + CRM','Métricas de control de objetivos','Marketing Digital y Diseño'],facturas:[{presup:23728.81,facturado:0,fechaEsperada:'2026-03-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:3510.89,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:5205.81,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10169.05,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
-  {id:8,empresa:'Fesca',correo:'PATTY_DC@HOTMAIL.COM',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-29',hito3:'2026-07-09',avance:0,resultados:['Producción más controlada con procesos estandarizados que reduzcan la variabilidad entre lotes.','Adopción de tecnologías de automatización para decisiones en tiempo real y mayor eficiencia.'],proyectos:['Desarrollo de plataforma gamificada web/móvil "Samba"','Diseño e implementación de página web + e-commerce','Implementación de sistema ERP modular'],facturas:[{presup:22000,facturado:22000,fechaEsperada:'2026-03-04',fechaEmision:'2026-03-04',fechaPago:null,estado:'Pagado'},{presup:12784.32,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:7830.08,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
-  {id:9,empresa:'Map Salud',correo:'jorgebado@mapsalud.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-03-13',hito3:'2026-07-13',avance:30,resultados:['Incrementar en un 40% la base de usuarios activos.','Ampliar la red de aseguradoras y centros médicos en un 25%.','Reducir en un 30% los tiempos de espera para consultas virtuales.','Implementar módulos de seguimiento de salud y bienestar corporativo.'],proyectos:['Implementación de ERP + PROYECTOS + CRM + CONECTOR ERP-JIRA','Marketing Digital'],facturas:[{presup:10792.62,facturado:10792.62,fechaEsperada:'2026-01-29',fechaEmision:'2026-01-29',fechaPago:null,estado:'Pagado'},{presup:11285.71,facturado:11285.71,fechaEsperada:'2026-01-29',fechaEmision:'2026-01-29',fechaPago:null,estado:'Pagado'},{presup:12784.50,facturado:null,fechaEsperada:'2026-04-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:7752.18,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
-  {id:10,empresa:'DL Varkoo',correo:'avargas140364@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'2026-05-01',hito3:'2026-09-01',avance:0,resultados:['Plataforma centralizada que unifique información de distintas áreas.','Área de marketing digital fortalecida para captación y fidelización de clientes.','Dashboard de KPIs financieros para monitoreo en tiempo real.','Sistema integrado con módulos existentes para mayor eficiencia operativa.'],proyectos:['Implementación de módulo ERP Restaurante','Implementación de Marketing Digital','Rediseño de Página Web','Auditoría Buyer Persona'],facturas:[{presup:21306.78,facturado:21306.78,fechaEsperada:'2026-03-24',fechaEmision:'2026-03-24',fechaPago:null,estado:'Pagado'},{presup:6781.10,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4357.63,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10169.49,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
-  {id:11,empresa:'VK Studio',correo:'',primerD:'Pendiente',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-06-17',hito3:'2026-11-02',avance:0,resultados:['Incrementar las ventas mensuales en un 30% mediante integración de plataformas de comercio.','Aumentar en un 20% la tasa de conversión de pedidos digitales.','Expandir la presencia en redes sociales en un 50%.','App móvil propia con al menos 5,000 descargas en los primeros 6 meses.'],proyectos:['Implementación de módulo ERP + RRHH','Implementación de CRM','Implementación de Elearning','Marketing Digital y Diseño'],facturas:[{presup:23728.81,facturado:0,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por facturar'},{presup:4358.35,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4358.35,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10168.50,facturado:null,fechaEsperada:'2026-08-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:1,empresa:'Aline',correo:'NELLYARMAS20@HOTMAIL.COM',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-23',hito3:'2026-06-23',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Alcanzar el 10% de las ventas mensuales totales con el delivery','Aumentar en 15% las visitas diarias en el corto plazo','Incrementar nuestra presencia digital en un 90%'],proyectos:['Base Operativa Digital y Control del Negocio (POS/ERP + Comandas/KDS)','Rentabilidad y Eficiencia Operativa (Inventarios/Mermas + Recetario/Costeo + Control financiero)','Crecimiento Comercial y Gestión Basada en Datos (WhatsApp Business + CRM + Marketing + KPIs)'],facturas:[{presup:21307.20,facturado:21307.20,fechaEsperada:'2026-03-26',fechaEmision:null,fechaPago:null,estado:'Por cobrar'},{presup:12784.32,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:8522.88,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:2,empresa:'Iper Captiva',correo:'',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'',hito3:'',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:[],proyectos:[],facturas:[{presup:12784.32,facturado:12784.32,fechaEsperada:'2025-11-25',fechaEmision:'2025-11-25',fechaPago:null,estado:'Pagado'},{presup:17045.76,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:12784.33,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:3,empresa:'Monkey Fit',correo:'jose.drago@monkeyfit.co',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-03-13',hito3:'2026-07-13',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Incrementar en un 30% la cantidad de empresas afiliadas durante el 2026.','Aumentar en un 25% la adhesión de colaboradores a través de un agente conversacional.','Expandir la presencia en redes sociales en un 50%.'],proyectos:['Chatbot inteligente en WhatsApp','Campañas de marketing digital','Implementación de sistema ERP modular'],facturas:[{presup:15322.50,facturado:15322.50,fechaEsperada:'2026-02-27',fechaEmision:'2026-02-27',fechaPago:null,estado:'Pagado'},{presup:17045.76,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10246.15,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:4,empresa:'Mauval',correo:'aaguirre@mauvalsac.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-10',hito3:'2026-09-10',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Canales digitales implementados: web 100% operativa, 10% ventas desde canal digital, +30% en ventas.','Estrategia de marketing digital que expande cobertura a 30% más distritos de Lima.','Personal capacitado en herramientas de marketing digital.'],proyectos:['Implementación de módulo de CRM','Marketing Digital y Diseño + activos digitales','Implementación de módulo de MRP','Métricas de control de objetivos'],facturas:[{presup:21307.18,facturado:21307.18,fechaEsperada:'2026-03-27',fechaEmision:null,fechaPago:null,estado:'Pagado'},{presup:4358.05,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4358.05,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:12591.10,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:5,empresa:'Umana',correo:'Nicolas.larosa.peron@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-23',hito3:'2026-09-23',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Reducción del 30% en tareas manuales con módulo ERP.','Satisfacción del cliente mínimo 85%.','Procesos comerciales automatizados al 100%.','Personal con capacidades tecnológicas fortalecidas.','Control de indicadores financieros en tiempo real.'],proyectos:['Implementación de ERP + PROYECTOS + CRM','Marketing Digital','Rediseño Página Web + SEO + Analytics + FB','Auditoría Manual de Marca'],facturas:[{presup:21910.25,facturado:21910.25,fechaEsperada:'2026-02-25',fechaEmision:'2026-02-25',fechaPago:null,estado:'Pagado'},{presup:12784.50,facturado:null,fechaEsperada:'2026-04-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:7920.26,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:6,empresa:'Hidropónika',correo:'gaby.rodriguez.larrain.s@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'2026-03-01',hito3:'2026-07-01',hito2Presentado:false,hito3Presentado:false,avance:50,resultados:['Plataforma para centralizar mensajes de todos los canales digitales.','Plataforma para la digitalización de cursos.','Reducción en un 50% del tiempo en errores o actividades manuales.'],proyectos:['ERP integral: Compras, Producción, Ventas, Inventario, CRM y facturación','Implementación CRM Conversacional','Implementación de sistema LMS','Asistencia técnica: Tag Manager y Google Analytics'],facturas:[{presup:23700,facturado:23700,fechaEsperada:'2024-12-10',fechaEmision:'2024-12-10',fechaPago:null,estado:'Pagado'},{presup:10653.60,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:8251.41,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:7,empresa:'Mavesco',correo:'floyd.scofield@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'2026-05-23',hito3:'2026-09-23',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Incrementar ventas a través de la página en un 40%.','Presencia en todas las redes sociales al 100%.','Aumentar el tráfico web en un 70%.'],proyectos:['Implementación de módulo ERP + Conectores','Implementación de módulo MRP + CRM','Métricas de control de objetivos','Marketing Digital y Diseño'],facturas:[{presup:23728.81,facturado:0,fechaEsperada:'2026-03-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:3510.89,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:5205.81,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10169.05,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:8,empresa:'Fesca',correo:'PATTY_DC@HOTMAIL.COM',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-29',hito3:'2026-07-09',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Producción más controlada con procesos estandarizados que reduzcan la variabilidad entre lotes.','Adopción de tecnologías de automatización para decisiones en tiempo real y mayor eficiencia.'],proyectos:['Desarrollo de plataforma gamificada web/móvil "Samba"','Diseño e implementación de página web + e-commerce','Implementación de sistema ERP modular'],facturas:[{presup:22000,facturado:22000,fechaEsperada:'2026-03-04',fechaEmision:'2026-03-04',fechaPago:null,estado:'Pagado'},{presup:12784.32,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:7830.08,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:9,empresa:'Map Salud',correo:'jorgebado@mapsalud.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-03-13',hito3:'2026-07-13',hito2Presentado:false,hito3Presentado:false,avance:30,resultados:['Incrementar en un 40% la base de usuarios activos.','Ampliar la red de aseguradoras y centros médicos en un 25%.','Reducir en un 30% los tiempos de espera para consultas virtuales.','Implementar módulos de seguimiento de salud y bienestar corporativo.'],proyectos:['Implementación de ERP + PROYECTOS + CRM + CONECTOR ERP-JIRA','Marketing Digital'],facturas:[{presup:10792.62,facturado:10792.62,fechaEsperada:'2026-01-29',fechaEmision:'2026-01-29',fechaPago:null,estado:'Pagado'},{presup:11285.71,facturado:11285.71,fechaEsperada:'2026-01-29',fechaEmision:'2026-01-29',fechaPago:null,estado:'Pagado'},{presup:12784.50,facturado:null,fechaEsperada:'2026-04-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:7752.18,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:10,empresa:'DL Varkoo',correo:'avargas140364@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'2026-05-01',hito3:'2026-09-01',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Plataforma centralizada que unifique información de distintas áreas.','Área de marketing digital fortalecida para captación y fidelización de clientes.','Dashboard de KPIs financieros para monitoreo en tiempo real.','Sistema integrado con módulos existentes para mayor eficiencia operativa.'],proyectos:['Implementación de módulo ERP Restaurante','Implementación de Marketing Digital','Rediseño de Página Web','Auditoría Buyer Persona'],facturas:[{presup:21306.78,facturado:21306.78,fechaEsperada:'2026-03-24',fechaEmision:'2026-03-24',fechaPago:null,estado:'Pagado'},{presup:6781.10,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4357.63,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10169.49,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
+  {id:11,empresa:'VK Studio',correo:'',primerD:'Pendiente',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-06-17',hito3:'2026-11-02',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Incrementar las ventas mensuales en un 30% mediante integración de plataformas de comercio.','Aumentar en un 20% la tasa de conversión de pedidos digitales.','Expandir la presencia en redes sociales en un 50%.','App móvil propia con al menos 5,000 descargas en los primeros 6 meses.'],proyectos:['Implementación de módulo ERP + RRHH','Implementación de CRM','Implementación de Elearning','Marketing Digital y Diseño'],facturas:[{presup:23728.81,facturado:0,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por facturar'},{presup:4358.35,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4358.35,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10168.50,facturado:null,fechaEsperada:'2026-08-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
 ];
 const EF=['Pendiente','Por emitir','Por cobrar','Pagado','Por facturar'];
 const ED=['Desembolsado','Pendiente','En proceso','Diagnóstico'];
@@ -386,7 +484,209 @@ function tP(p){return p.facturas.reduce((s,f)=>s+Number(f.presup||0),0);}
 function tF(p){return p.facturas.reduce((s,f)=>s+Number(f.facturado||0),0);}
 function setSS(state,msg){const d=document.getElementById('sync-dot'),l=document.getElementById('sync-label');d.className='sync-dot'+(state==='syncing'?' syncing':state==='error'?' error':'');l.textContent=msg;}
 function getURL(){return HARDCODED_SCRIPT_URL||localStorage.getItem(URL_KEY)||'';}
-function saveScriptUrl(){const url=document.getElementById('script-url-input').value.trim();if(!url||!url.startsWith('https://script.google.com')){alert('URL inválida');return;}localStorage.setItem(URL_KEY,url);document.getElementById('config-banner').classList.remove('show');loadFromSheets();}
+function saveScriptUrl(){const url=document.getElementById('script-url-input').value.trim();if(!url||!url.startsWith('https://script.google.com')){alert('URL inválida');return;}localStorage.setItem(URL_KEY,url);document.getElementById('config-banner').classList.remove('show');
+function toggleHitoPres(id, field, val){
+  const p=projects.find(x=>x.id===id); if(!p)return;
+  p[field]=val;
+  const row=document.getElementById((field==='hito2Presentado'?'h2c-':'h3c-')+id)?.closest('.hito-check-row');
+  if(row) row.classList.toggle('checked', val);
+}
+
+loadFromSheets();}
+// ── DASHBOARD ─────────────────────────────────────────────────
+function renderDashboard(){
+  const MN2=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const today2=new Date(); today2.setHours(0,0,0,0);
+
+  // ── Totales financieros
+  const totalPresup=projects.reduce((s,p)=>s+tP(p),0);
+  const totalFactur=projects.reduce((s,p)=>s+tF(p),0);
+  const totalPend=projects.reduce((s,p)=>{
+    return s+p.facturas.reduce((ss,f)=>{
+      if(['Por emitir','Por cobrar','Pendiente','Por facturar'].includes(f.estado)&&f.presup>0) return ss+Number(f.presup||0);
+      return ss;
+    },0);
+  },0);
+  const ejec=totalPresup>0?Math.round((totalFactur/totalPresup)*100):0;
+  const vencidos=projects.filter(p=>(p.hito2&&new Date(p.hito2)<today2)||(p.hito3&&new Date(p.hito3)<today2)).length;
+
+  document.getElementById('db-presup').textContent=fmtK(totalPresup);
+  document.getElementById('db-facturado').textContent=fmtK(totalFactur);
+  document.getElementById('db-pendiente').textContent=fmtK(totalPend);
+  document.getElementById('db-ejecucion').textContent=ejec+'%';
+  document.getElementById('db-empresas').textContent=projects.length;
+  const vEl=document.getElementById('db-vencidos');
+  vEl.textContent=vencidos;
+  vEl.style.color=vencidos>0?'var(--rose)':'var(--g900)';
+
+  // ── Avance por empresa
+  const COLORS_DB=['#4f46e5','#0891b2','#059669','#d97706','#7c3aed','#e11d48','#0f766e','#9333ea','#c2410c','#0369a1','#15803d'];
+  const avEl=document.getElementById('db-avance-list');
+  const sortedByAvance=[...projects].sort((a,b)=>b.avance-a.avance);
+  avEl.innerHTML=sortedByAvance.map((p,i)=>{
+    const col=COLORS_DB[i%COLORS_DB.length];
+    const avp=Number(p.avance)||0;
+    return `<div class="db-avance-item">
+      <div class="db-avance-name" title="${p.empresa}">${p.empresa}</div>
+      <div class="db-avance-track"><div class="db-avance-fill" style="width:${avp}%;background:${col}"></div></div>
+      <div class="db-avance-pct" style="color:${col}">${avp}%</div>
+    </div>`;
+  }).join('');
+
+  // ── Tabla desembolsos por empresa
+  function dPill(v){ const ok=v==='Desembolsado'; const proc=v==='En proceso'||v==='Diagnóstico';
+    const cls=ok?'dp-ok':proc?'dp-proceso':'dp-pend';
+    const icon=ok?'✓':proc?'⟳':'✕';
+    return `<span class="db-pill ${cls}">${icon} ${v||'Pendiente'}</span>`;
+  }
+  const desembBody=document.getElementById('db-desemb-body');
+  if(desembBody){
+    desembBody.innerHTML=projects.map(p=>`<tr>
+      <td style="font-weight:600">${p.empresa}</td>
+      <td>${dPill(p.primerD)}</td>
+      <td>${dPill(p.segundoD)}</td>
+    </tr>`).join('');
+  }
+
+  // ── Barras horizontales: facturación por empresa
+  const maxFact=Math.max(...projects.map(p=>tP(p)),1);
+  const sortedByFact=[...projects].sort((a,b)=>tP(b)-tP(a));
+  document.getElementById('db-fact-bars').innerHTML=sortedByFact.map((p,i)=>{
+    const tp2=tP(p), tf2=tF(p);
+    const wpresup=Math.round((tp2/maxFact)*100);
+    const wfact=tp2>0?Math.round((tf2/tp2)*100):0;
+    const col=COLORS_DB[i%COLORS_DB.length];
+    return `<div class="db-bar-item">
+      <div class="db-bar-name" title="${p.empresa}">${p.empresa}</div>
+      <div class="db-bar-track" style="position:relative">
+        <div style="position:absolute;inset:0;background:${col}18;border-radius:var(--r4)"></div>
+        <div class="db-bar-fill" style="width:${wfact}%;background:${col}">
+          ${wfact>15?`<span>S/ ${fmtNum(tf2)}</span>`:''}
+        </div>
+      </div>
+      <div class="db-bar-val">S/ ${fmtNum(tp2)}</div>
+    </div>`;
+  }).join('');
+
+  // ── Hitos próximos (próximos 60 días) y vencidos
+  const hitosEl=document.getElementById('db-hitos-list');
+  const hitos=[];
+  projects.forEach(p=>{
+    if(p.hito2){const d=new Date(p.hito2+'T00:00:00');const diff=Math.round((d-today2)/86400000);hitos.push({empresa:p.empresa,label:'Hito 2',fecha:p.hito2,diff,d});}
+    if(p.hito3){const d=new Date(p.hito3+'T00:00:00');const diff=Math.round((d-today2)/86400000);hitos.push({empresa:p.empresa,label:'Hito 3',fecha:p.hito3,diff,d});}
+  });
+  hitos.sort((a,b)=>a.diff-b.diff);
+  const hitosFiltered=hitos.filter(h=>h.diff<=60);
+  if(hitosFiltered.length===0){
+    hitosEl.innerHTML='<div style="padding:20px;text-align:center;color:var(--text3);font-size:.76rem">No hay hitos en los próximos 60 días</div>';
+  } else {
+    hitosEl.innerHTML=hitosFiltered.map(h=>{
+      const isVenc=h.diff<0;
+      const isSoon=h.diff>=0&&h.diff<=14;
+      const col=isVenc?'var(--rose)':isSoon?'var(--amber)':'var(--emerald)';
+      const label=isVenc?`Vencido hace ${Math.abs(h.diff)} días`:h.diff===0?'Hoy':h.diff===1?'Mañana':`En ${h.diff} días`;
+      const fechaFmt=new Date(h.fecha+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'short'});
+      return `<div class="db-hito-item">
+        <div class="db-hito-dot" style="background:${col}"></div>
+        <div class="db-hito-info">
+          <div class="db-hito-empresa">${h.empresa}</div>
+          <div class="db-hito-desc">${h.label} · ${fechaFmt}</div>
+        </div>
+        <div class="db-hito-date" style="color:${col}">${label}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── Estado de facturas
+  const estados={Pagado:{count:0,monto:0},
+    'Por cobrar':{count:0,monto:0},
+    'Por emitir':{count:0,monto:0},
+    'Por facturar':{count:0,monto:0}};
+  projects.forEach(p=>p.facturas.forEach(f=>{
+    if(f.presup>0){
+      const k=estados[f.estado]?f.estado:'Por emitir';
+      if(estados[k]){estados[k].count++;estados[k].monto+=Number(f.presup||0);}
+    }
+  }));
+  const estColors={Pagado:'var(--emerald)','Por cobrar':'var(--brand)','Por emitir':'var(--amber)','Por facturar':'#7c3aed'};
+  document.getElementById('db-fact-estado').innerHTML=Object.entries(estados).map(([k,v])=>`
+    <div class="db-fest-item">
+      <div class="db-fest-val" style="color:${estColors[k]||'var(--g900)'}">${v.count}</div>
+      <div class="db-fest-lbl">${k}</div>
+      <div class="db-fest-amount">S/ ${fmtNum(v.monto)}</div>
+    </div>`).join('');
+
+  // ── Proyectos por implementadora
+  const impl={};
+  projects.forEach(p=>{const k=p.implementadora||'Sin asignar';if(!impl[k])impl[k]={count:0,presup:0};impl[k].count++;impl[k].presup+=tP(p);});
+  const implColors={'Underdog':'#5b21b6','Parking':'var(--brand)','Sin asignar':'var(--g400)'};
+  const implBg={'Underdog':'#ede9fe','Parking':'var(--brand-lt)','Sin asignar':'var(--g100)'};
+  document.getElementById('db-impl-wrap').innerHTML=Object.entries(impl).sort((a,b)=>b[1].count-a[1].count).map(([k,v])=>`
+    <div class="db-impl-item">
+      <div>
+        <div class="db-impl-badge" style="background:${implBg[k]||'var(--g100)'};color:${implColors[k]||'var(--g600)'}">${k}</div>
+        <div class="db-impl-sub" style="margin-top:3px">S/ ${fmtNum(v.presup)} presupuestado</div>
+      </div>
+      <div style="text-align:right">
+        <div class="db-impl-count">${v.count}</div>
+        <div class="db-impl-sub">empresa${v.count!==1?'s':''}</div>
+      </div>
+    </div>`).join('');
+
+  // ── Tabla estado presentación de hitos
+  const hitosPresBody=document.getElementById('db-hitos-pres-body');
+  if(hitosPresBody){
+    function fmtDate(d){ if(!d)return '<span style="color:var(--g400)">—</span>'; return new Date(d+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'2-digit'}); }
+    function presBadge(pres,fecha){
+      if(!fecha) return '<span style="color:var(--g400);font-size:.7rem">Sin fecha</span>';
+      if(pres) return '<span class="db-pill dp-ok">✓ Presentado</span>';
+      const diff=Math.round((new Date(fecha+'T00:00:00')-today2)/86400000);
+      if(diff<0) return '<span class="db-pill dp-pend">✕ No presentado</span>';
+      return '<span class="db-pill dp-proceso">⟳ Pendiente</span>';
+    }
+    hitosPresBody.innerHTML=projects.map(p=>`<tr>
+      <td style="font-weight:600">${p.empresa}</td>
+      <td>${fmtDate(p.hito2)}</td>
+      <td>${presBadge(p.hito2Presentado,p.hito2)}</td>
+      <td>${fmtDate(p.hito3)}</td>
+      <td>${presBadge(p.hito3Presentado,p.hito3)}</td>
+    </tr>`).join('');
+  }
+}
+
+function fmtNum(n){
+  if(!n||n===0)return '0';
+  if(n>=1000000)return (n/1000000).toFixed(1)+'M';
+  if(n>=1000)return (n/1000).toFixed(1)+'K';
+  return Math.round(n).toLocaleString('es-PE');
+}
+
+function renderDonut(svgId, legendId, data, total){
+  const svg=document.getElementById(svgId);
+  const legend=document.getElementById(legendId);
+  if(!svg||!legend)return;
+  const cx=60,cy=60,r=45,stroke=14;
+  const circum=2*Math.PI*r;
+  let offset=0;
+  let paths='';
+  data.forEach(d=>{
+    const pct=d.val/total;
+    const dash=pct*circum;
+    const gap=circum-dash;
+    paths+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${stroke}" stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}" stroke-dashoffset="${-offset.toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;
+    offset+=pct*circum;
+  });
+  paths+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="16" font-weight="800" fill="var(--g900)">${total}</text>`;
+  paths+=`<text x="${cx}" y="${cy+12}" text-anchor="middle" font-size="8" fill="var(--text3)">EMPRESAS</text>`;
+  svg.innerHTML=paths;
+  legend.innerHTML=data.map(d=>`<div class="db-legend-item">
+    <div class="db-legend-dot" style="background:${d.color}"></div>
+    <span>${d.label}</span>
+    <span class="db-legend-val">${d.val}</span>
+  </div>`).join('');
+}
+
+loadFromSheets();}
 async function loadFromSheets(){
   const url=getURL();setLM('Conectando con Google Sheets…');
   if(!url){projects=JSON.parse(JSON.stringify(INITIAL));renderAll();hideLoader();document.getElementById('config-banner').classList.add('show');setSS('error','Sin configurar');return;}
@@ -432,8 +732,22 @@ function renderCard(p){
     <div class="prog-track"><div class="prog-fill" style="width:${avp}%"></div></div>
   </div>
   <div class="hitos-row">
-    <div class="hito-box ${dc(p.hito2)}" id="h2-${p.id}"><div class="hito-label">Hito 2${dc(p.hito2)==='hito-overdue'?' ⚠ Vencido':''}</div><input type="date" value="${p.hito2||''}" onchange="uField(${p.id},'hito2',this.value);rHito(${p.id},'hito2',this.value)"></div>
-    <div class="hito-box ${dc(p.hito3)}" id="h3-${p.id}"><div class="hito-label">Hito 3${dc(p.hito3)==='hito-overdue'?' ⚠ Vencido':''}</div><input type="date" value="${p.hito3||''}" onchange="uField(${p.id},'hito3',this.value);rHito(${p.id},'hito3',this.value)"></div>
+    <div class="hito-box ${dc(p.hito2)}" id="h2-${p.id}">
+      <div class="hito-label">Hito 2${dc(p.hito2)==='hito-overdue'?' ⚠ Vencido':''}</div>
+      <input type="date" value="${p.hito2||''}" onchange="uField(${p.id},'hito2',this.value);rHito(${p.id},'hito2',this.value)">
+      <div class="hito-check-row${p.hito2Presentado?' checked':''}">
+        <input type="checkbox" id="h2c-${p.id}" ${p.hito2Presentado?'checked':''} onclick="event.stopPropagation();toggleHitoPres(${p.id},'hito2Presentado',this.checked)">
+        <label class="hito-check-label" for="h2c-${p.id}">Hito presentado a PROINNOVATE</label>
+      </div>
+    </div>
+    <div class="hito-box ${dc(p.hito3)}" id="h3-${p.id}">
+      <div class="hito-label">Hito 3${dc(p.hito3)==='hito-overdue'?' ⚠ Vencido':''}</div>
+      <input type="date" value="${p.hito3||''}" onchange="uField(${p.id},'hito3',this.value);rHito(${p.id},'hito3',this.value)">
+      <div class="hito-check-row${p.hito3Presentado?' checked':''}">
+        <input type="checkbox" id="h3c-${p.id}" ${p.hito3Presentado?'checked':''} onclick="event.stopPropagation();toggleHitoPres(${p.id},'hito3Presentado',this.checked)">
+        <label class="hito-check-label" for="h3c-${p.id}">Hito presentado a PROINNOVATE</label>
+      </div>
+    </div>
   </div>
   <div class="billing-mini">
     <div class="bm-box bm-presup"><div class="bm-label">Total Presupuestado</div><div class="bm-value" id="bmp-${p.id}">${fmt(tp)}</div></div>
@@ -521,7 +835,7 @@ function updateStats(){
 function showToast(msg,err=false){const t=document.getElementById('toast');t.textContent=msg;t.className='show'+(err?' err':'');setTimeout(()=>t.className='',2500);}
 document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');curFilter=this.dataset.filter;renderAll();});});
 document.getElementById('search').addEventListener('input',renderAll);
-function showPage(name,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');btn.classList.add('active');if(name==='cashflow')renderCashflow();}
+function showPage(name,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');btn.classList.add('active');if(name==='cashflow')renderCashflow();if(name==='dashboard')renderDashboard();}
 
 function buildCF(year){
   return projects.map(p=>{
@@ -574,7 +888,326 @@ function renderCashflow(){
       <tr class="cf-acum-row"><td>Acumulado pendiente de pago</td>${aC(tPend,'cf-cobrar')}</tr>
     </tbody>`;
 }
+
+// ── DASHBOARD ─────────────────────────────────────────────────
+function renderDashboard(){
+  const MN2=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const today2=new Date(); today2.setHours(0,0,0,0);
+
+  // ── Totales financieros
+  const totalPresup=projects.reduce((s,p)=>s+tP(p),0);
+  const totalFactur=projects.reduce((s,p)=>s+tF(p),0);
+  const totalPend=projects.reduce((s,p)=>{
+    return s+p.facturas.reduce((ss,f)=>{
+      if(['Por emitir','Por cobrar','Pendiente','Por facturar'].includes(f.estado)&&f.presup>0) return ss+Number(f.presup||0);
+      return ss;
+    },0);
+  },0);
+  const ejec=totalPresup>0?Math.round((totalFactur/totalPresup)*100):0;
+  const vencidos=projects.filter(p=>(p.hito2&&new Date(p.hito2)<today2)||(p.hito3&&new Date(p.hito3)<today2)).length;
+
+  document.getElementById('db-presup').textContent=fmtK(totalPresup);
+  document.getElementById('db-facturado').textContent=fmtK(totalFactur);
+  document.getElementById('db-pendiente').textContent=fmtK(totalPend);
+  document.getElementById('db-ejecucion').textContent=ejec+'%';
+  document.getElementById('db-empresas').textContent=projects.length;
+  const vEl=document.getElementById('db-vencidos');
+  vEl.textContent=vencidos;
+  vEl.style.color=vencidos>0?'var(--rose)':'var(--g900)';
+
+  // ── Avance por empresa
+  const COLORS_DB=['#4f46e5','#0891b2','#059669','#d97706','#7c3aed','#e11d48','#0f766e','#9333ea','#c2410c','#0369a1','#15803d'];
+  const avEl=document.getElementById('db-avance-list');
+  const sortedByAvance=[...projects].sort((a,b)=>b.avance-a.avance);
+  avEl.innerHTML=sortedByAvance.map((p,i)=>{
+    const col=COLORS_DB[i%COLORS_DB.length];
+    const avp=Number(p.avance)||0;
+    return `<div class="db-avance-item">
+      <div class="db-avance-name" title="${p.empresa}">${p.empresa}</div>
+      <div class="db-avance-track"><div class="db-avance-fill" style="width:${avp}%;background:${col}"></div></div>
+      <div class="db-avance-pct" style="color:${col}">${avp}%</div>
+    </div>`;
+  }).join('');
+
+  // ── Tabla desembolsos por empresa
+  function dPill(v){ const ok=v==='Desembolsado'; const proc=v==='En proceso'||v==='Diagnóstico';
+    const cls=ok?'dp-ok':proc?'dp-proceso':'dp-pend';
+    const icon=ok?'✓':proc?'⟳':'✕';
+    return `<span class="db-pill ${cls}">${icon} ${v||'Pendiente'}</span>`;
+  }
+  const desembBody=document.getElementById('db-desemb-body');
+  if(desembBody){
+    desembBody.innerHTML=projects.map(p=>`<tr>
+      <td style="font-weight:600">${p.empresa}</td>
+      <td>${dPill(p.primerD)}</td>
+      <td>${dPill(p.segundoD)}</td>
+    </tr>`).join('');
+  }
+
+  // ── Barras horizontales: facturación por empresa
+  const maxFact=Math.max(...projects.map(p=>tP(p)),1);
+  const sortedByFact=[...projects].sort((a,b)=>tP(b)-tP(a));
+  document.getElementById('db-fact-bars').innerHTML=sortedByFact.map((p,i)=>{
+    const tp2=tP(p), tf2=tF(p);
+    const wpresup=Math.round((tp2/maxFact)*100);
+    const wfact=tp2>0?Math.round((tf2/tp2)*100):0;
+    const col=COLORS_DB[i%COLORS_DB.length];
+    return `<div class="db-bar-item">
+      <div class="db-bar-name" title="${p.empresa}">${p.empresa}</div>
+      <div class="db-bar-track" style="position:relative">
+        <div style="position:absolute;inset:0;background:${col}18;border-radius:var(--r4)"></div>
+        <div class="db-bar-fill" style="width:${wfact}%;background:${col}">
+          ${wfact>15?`<span>S/ ${fmtNum(tf2)}</span>`:''}
+        </div>
+      </div>
+      <div class="db-bar-val">S/ ${fmtNum(tp2)}</div>
+    </div>`;
+  }).join('');
+
+  // ── Hitos próximos (próximos 60 días) y vencidos
+  const hitosEl=document.getElementById('db-hitos-list');
+  const hitos=[];
+  projects.forEach(p=>{
+    if(p.hito2){const d=new Date(p.hito2+'T00:00:00');const diff=Math.round((d-today2)/86400000);hitos.push({empresa:p.empresa,label:'Hito 2',fecha:p.hito2,diff,d});}
+    if(p.hito3){const d=new Date(p.hito3+'T00:00:00');const diff=Math.round((d-today2)/86400000);hitos.push({empresa:p.empresa,label:'Hito 3',fecha:p.hito3,diff,d});}
+  });
+  hitos.sort((a,b)=>a.diff-b.diff);
+  const hitosFiltered=hitos.filter(h=>h.diff<=60);
+  if(hitosFiltered.length===0){
+    hitosEl.innerHTML='<div style="padding:20px;text-align:center;color:var(--text3);font-size:.76rem">No hay hitos en los próximos 60 días</div>';
+  } else {
+    hitosEl.innerHTML=hitosFiltered.map(h=>{
+      const isVenc=h.diff<0;
+      const isSoon=h.diff>=0&&h.diff<=14;
+      const col=isVenc?'var(--rose)':isSoon?'var(--amber)':'var(--emerald)';
+      const label=isVenc?`Vencido hace ${Math.abs(h.diff)} días`:h.diff===0?'Hoy':h.diff===1?'Mañana':`En ${h.diff} días`;
+      const fechaFmt=new Date(h.fecha+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'short'});
+      return `<div class="db-hito-item">
+        <div class="db-hito-dot" style="background:${col}"></div>
+        <div class="db-hito-info">
+          <div class="db-hito-empresa">${h.empresa}</div>
+          <div class="db-hito-desc">${h.label} · ${fechaFmt}</div>
+        </div>
+        <div class="db-hito-date" style="color:${col}">${label}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── Estado de facturas
+  const estados={Pagado:{count:0,monto:0},
+    'Por cobrar':{count:0,monto:0},
+    'Por emitir':{count:0,monto:0},
+    'Por facturar':{count:0,monto:0}};
+  projects.forEach(p=>p.facturas.forEach(f=>{
+    if(f.presup>0){
+      const k=estados[f.estado]?f.estado:'Por emitir';
+      if(estados[k]){estados[k].count++;estados[k].monto+=Number(f.presup||0);}
+    }
+  }));
+  const estColors={Pagado:'var(--emerald)','Por cobrar':'var(--brand)','Por emitir':'var(--amber)','Por facturar':'#7c3aed'};
+  document.getElementById('db-fact-estado').innerHTML=Object.entries(estados).map(([k,v])=>`
+    <div class="db-fest-item">
+      <div class="db-fest-val" style="color:${estColors[k]||'var(--g900)'}">${v.count}</div>
+      <div class="db-fest-lbl">${k}</div>
+      <div class="db-fest-amount">S/ ${fmtNum(v.monto)}</div>
+    </div>`).join('');
+
+  // ── Proyectos por implementadora
+  const impl={};
+  projects.forEach(p=>{const k=p.implementadora||'Sin asignar';if(!impl[k])impl[k]={count:0,presup:0};impl[k].count++;impl[k].presup+=tP(p);});
+  const implColors={'Underdog':'#5b21b6','Parking':'var(--brand)','Sin asignar':'var(--g400)'};
+  const implBg={'Underdog':'#ede9fe','Parking':'var(--brand-lt)','Sin asignar':'var(--g100)'};
+  document.getElementById('db-impl-wrap').innerHTML=Object.entries(impl).sort((a,b)=>b[1].count-a[1].count).map(([k,v])=>`
+    <div class="db-impl-item">
+      <div>
+        <div class="db-impl-badge" style="background:${implBg[k]||'var(--g100)'};color:${implColors[k]||'var(--g600)'}">${k}</div>
+        <div class="db-impl-sub" style="margin-top:3px">S/ ${fmtNum(v.presup)} presupuestado</div>
+      </div>
+      <div style="text-align:right">
+        <div class="db-impl-count">${v.count}</div>
+        <div class="db-impl-sub">empresa${v.count!==1?'s':''}</div>
+      </div>
+    </div>`).join('');
+
+  // ── Tabla estado presentación de hitos
+  const hitosPresBody=document.getElementById('db-hitos-pres-body');
+  if(hitosPresBody){
+    function fmtDate(d){ if(!d)return '<span style="color:var(--g400)">—</span>'; return new Date(d+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'2-digit'}); }
+    function presBadge(pres,fecha){
+      if(!fecha) return '<span style="color:var(--g400);font-size:.7rem">Sin fecha</span>';
+      if(pres) return '<span class="db-pill dp-ok">✓ Presentado</span>';
+      const diff=Math.round((new Date(fecha+'T00:00:00')-today2)/86400000);
+      if(diff<0) return '<span class="db-pill dp-pend">✕ No presentado</span>';
+      return '<span class="db-pill dp-proceso">⟳ Pendiente</span>';
+    }
+    hitosPresBody.innerHTML=projects.map(p=>`<tr>
+      <td style="font-weight:600">${p.empresa}</td>
+      <td>${fmtDate(p.hito2)}</td>
+      <td>${presBadge(p.hito2Presentado,p.hito2)}</td>
+      <td>${fmtDate(p.hito3)}</td>
+      <td>${presBadge(p.hito3Presentado,p.hito3)}</td>
+    </tr>`).join('');
+  }
+}
+
+function fmtNum(n){
+  if(!n||n===0)return '0';
+  if(n>=1000000)return (n/1000000).toFixed(1)+'M';
+  if(n>=1000)return (n/1000).toFixed(1)+'K';
+  return Math.round(n).toLocaleString('es-PE');
+}
+
+function renderDonut(svgId, legendId, data, total){
+  const svg=document.getElementById(svgId);
+  const legend=document.getElementById(legendId);
+  if(!svg||!legend)return;
+  const cx=60,cy=60,r=45,stroke=14;
+  const circum=2*Math.PI*r;
+  let offset=0;
+  let paths='';
+  data.forEach(d=>{
+    const pct=d.val/total;
+    const dash=pct*circum;
+    const gap=circum-dash;
+    paths+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${stroke}" stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}" stroke-dashoffset="${-offset.toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;
+    offset+=pct*circum;
+  });
+  paths+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="16" font-weight="800" fill="var(--g900)">${total}</text>`;
+  paths+=`<text x="${cx}" y="${cy+12}" text-anchor="middle" font-size="8" fill="var(--text3)">EMPRESAS</text>`;
+  svg.innerHTML=paths;
+  legend.innerHTML=data.map(d=>`<div class="db-legend-item">
+    <div class="db-legend-dot" style="background:${d.color}"></div>
+    <span>${d.label}</span>
+    <span class="db-legend-val">${d.val}</span>
+  </div>`).join('');
+}
+
 loadFromSheets();
 </script>
+
+<!-- DASHBOARD PAGE -->
+<div class="page" id="page-dashboard">
+  <div class="db-header">
+    <h2 class="db-title">Dashboard de Seguimiento</h2>
+    <p class="db-sub">Indicadores clave del portafolio PROINNOVATE · Mipymes Digitales</p>
+  </div>
+
+  <!-- ROW 1: KPI cards -->
+  <div class="db-kpi-grid">
+    <div class="db-kpi-card">
+      <div class="db-kpi-icon" style="background:var(--brand-lt);color:var(--brand)">
+        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      </div>
+      <div>
+        <div class="db-kpi-val" id="db-presup">S/ 0</div>
+        <div class="db-kpi-lbl">Total Presupuestado</div>
+      </div>
+    </div>
+    <div class="db-kpi-card">
+      <div class="db-kpi-icon" style="background:var(--emerald-lt);color:var(--emerald)">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <div class="db-kpi-val" id="db-facturado">S/ 0</div>
+        <div class="db-kpi-lbl">Total Facturado</div>
+      </div>
+    </div>
+    <div class="db-kpi-card">
+      <div class="db-kpi-icon" style="background:var(--amber-lt);color:var(--amber)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div>
+        <div class="db-kpi-val" id="db-pendiente">S/ 0</div>
+        <div class="db-kpi-lbl">Por Cobrar / Emitir</div>
+      </div>
+    </div>
+    <div class="db-kpi-card">
+      <div class="db-kpi-icon" style="background:#ede9fe;color:#5b21b6">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      </div>
+      <div>
+        <div class="db-kpi-val" id="db-ejecucion">0%</div>
+        <div class="db-kpi-lbl">Ejecución Financiera</div>
+      </div>
+    </div>
+    <div class="db-kpi-card">
+      <div class="db-kpi-icon" style="background:var(--teal-lt);color:var(--teal)">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div>
+        <div class="db-kpi-val" id="db-empresas">0</div>
+        <div class="db-kpi-lbl">Empresas Activas</div>
+      </div>
+    </div>
+    <div class="db-kpi-card">
+      <div class="db-kpi-icon" style="background:var(--rose-lt);color:var(--rose)">
+        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div>
+        <div class="db-kpi-val" id="db-vencidos">0</div>
+        <div class="db-kpi-lbl">Hitos Vencidos</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2: avance por empresa + estado desembolsos -->
+  <div class="db-row2">
+    <!-- Avance por empresa -->
+    <div class="db-panel db-panel-lg">
+      <div class="db-panel-title">Avance de Implementación por Empresa</div>
+      <div class="db-avance-list" id="db-avance-list"></div>
+    </div>
+    <!-- Estado desembolsos -->
+    <div class="db-panel">
+      <div class="db-panel-title">Estado de Desembolsos por Empresa</div>
+      <div style="overflow-x:auto">
+        <table class="db-desemb-table" id="db-desemb-table">
+          <thead><tr><th>Empresa</th><th>1er Desembolso</th><th>2do Desembolso</th></tr></thead>
+          <tbody id="db-desemb-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: facturación por empresa + hitos próximos -->
+  <div class="db-row2">
+    <!-- Facturación por empresa -->
+    <div class="db-panel db-panel-lg">
+      <div class="db-panel-title">Facturación por Empresa (S/)</div>
+      <div class="db-bars-wrap" id="db-fact-bars"></div>
+    </div>
+    <!-- Hitos próximos -->
+    <div class="db-panel">
+      <div class="db-panel-title">Hitos Próximos y Vencidos</div>
+      <div class="db-hitos-list" id="db-hitos-list"></div>
+    </div>
+  </div>
+
+  <!-- ROW 4: estado facturas + implementadora -->
+  <div class="db-row2">
+    <div class="db-panel">
+      <div class="db-panel-title">Estado de Facturas</div>
+      <div class="db-fact-estado" id="db-fact-estado"></div>
+    </div>
+    <div class="db-panel">
+      <div class="db-panel-title">Proyectos por Implementadora</div>
+      <div class="db-impl-wrap" id="db-impl-wrap"></div>
+    </div>
+  </div>
+
+  <!-- ROW 5: hitos presentados -->
+  <div style="margin-bottom:14px">
+    <div class="db-panel">
+      <div class="db-panel-title">Estado de Presentación de Hitos a PROINNOVATE</div>
+      <div style="overflow-x:auto">
+        <table class="db-hito-pres-table" id="db-hitos-pres-table">
+          <thead><tr><th>Empresa</th><th>Fecha Hito 2</th><th>Hito 2 Presentado</th><th>Fecha Hito 3</th><th>Hito 3 Presentado</th></tr></thead>
+          <tbody id="db-hitos-pres-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
