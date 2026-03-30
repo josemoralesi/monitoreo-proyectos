@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Control de Proyectos PROINNOVATE</title>
+<title>Panel de Proyectos — PROINNOVATE</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -13,29 +14,19 @@
   --amber:#d97706;--amber-lt:#fffbeb;
   --rose:#e11d48;--rose-lt:#fff1f2;
   --orange:#e8640a;--orange2:#f97c28;--orange-lt:#fff3ec;
+  --violet:#7c3aed;--violet-lt:#f5f3ff;
   --g50:#f9fafb;--g100:#f3f4f6;--g200:#e5e7eb;--g300:#d1d5db;
   --g400:#9ca3af;--g500:#6b7280;--g600:#4b5563;--g700:#374151;--g900:#111827;
   --bg:#f1f5f9;--white:#fff;--border:#e5e7eb;--border2:#d1d5db;
   --text:#111827;--text2:#4b5563;--text3:#9ca3af;
   --font:'Plus Jakarta Sans',system-ui,sans-serif;
-  --r4:4px;--r6:6px;--r8:8px;--r10:10px;--r12:12px;--r16:16px;
+  --r4:4px;--r6:6px;--r8:8px;--r12:12px;--r16:16px;
   --sh1:0 1px 3px rgba(0,0,0,.08);--sh2:0 4px 12px rgba(0,0,0,.08);--sh3:0 8px 24px rgba(0,0,0,.1);
-  /* compat aliases para el JS existente */
-  --navy:var(--brand-dk);--navy2:#1a3260;--navy3:var(--brand);
-  --blue:var(--brand);--blue-light:var(--brand-lt);
-  --green:var(--emerald);--green-light:var(--emerald-lt);
-  --red:var(--rose);--red-light:var(--rose-lt);
-  --surface:var(--white);--surface2:var(--g50);--surface3:var(--g100);
-  --border:var(--border);--border2:var(--border2);
-  --text2:var(--text2);--text3:var(--text3);--text4:var(--g400);
-  --fhead:var(--font);--fbody:var(--font);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;font-size:14px;-webkit-font-smoothing:antialiased;}
-
 /* LOADER */
-#loading-overlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#1e1b4b,#3730a3,#4f46e5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .4s;}
+#loading-overlay{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#1e1b4b,#3730a3,#4f46e5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .5s;}
 #loading-overlay.hidden{opacity:0;pointer-events:none;}
 .loader-logo{font-size:2rem;font-weight:800;color:#fff;letter-spacing:-.03em;}
 .loader-sub{font-size:.7rem;font-weight:600;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.18em;}
@@ -43,8 +34,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .loader-fill{height:100%;background:linear-gradient(90deg,#a5b4fc,#c084fc);animation:ld 1.4s ease-in-out infinite;}
 @keyframes ld{0%{width:0;margin-left:0}50%{width:60%;margin-left:20%}100%{width:0;margin-left:100%}}
 .loader-msg{font-size:.65rem;color:rgba(255,255,255,.3);}
-
-/* CONFIG BANNER */
+/* CONFIG */
 #config-banner{background:var(--rose-lt);border:1px solid #fecdd3;border-left:4px solid var(--rose);border-radius:var(--r8);margin:12px 20px;padding:14px 18px;display:none;}
 #config-banner.show{display:block;}
 .cb-title{font-size:.85rem;font-weight:700;color:var(--rose);margin-bottom:5px;}
@@ -52,22 +42,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .cb-body code{background:#ffe4e6;padding:1px 5px;border-radius:3px;font-family:monospace;}
 .cb-input-row{display:flex;gap:8px;margin-top:10px;}
 .cb-input{flex:1;background:var(--white);border:1px solid #fca5a5;border-radius:var(--r6);font-family:var(--font);font-size:.78rem;padding:8px 12px;outline:none;color:var(--text);}
-.cb-input:focus{border-color:var(--rose);}
 .cb-btn{font-size:.72rem;font-weight:600;padding:8px 16px;border-radius:var(--r6);border:none;background:var(--rose);color:#fff;cursor:pointer;}
-
-/* TOPBAR */
+/* NAV */
 .top-nav{height:54px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:stretch;padding:0 20px;position:sticky;top:0;z-index:200;box-shadow:var(--sh1);}
 .top-nav-left{display:flex;align-items:center;padding-right:20px;border-right:1px solid var(--border);margin-right:20px;}
 .logo{font-size:.9rem;font-weight:800;color:var(--g900);letter-spacing:-.02em;}
 .logo-sub{font-size:.58rem;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.1em;margin-top:1px;}
 .nav-tabs{display:flex;align-items:stretch;}
-.nav-tab{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:0 18px;border:none;background:transparent;color:var(--g400);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;font-family:var(--font);}
+.nav-tab{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:0 16px;border:none;background:transparent;color:var(--g400);cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;font-family:var(--font);}
 .nav-tab:hover{color:var(--text);}
 .nav-tab.active{color:var(--brand);border-bottom-color:var(--brand);}
-.top-nav-right{margin-left:auto;display:flex;align-items:center;gap:14px;padding:10px 0;}
+.top-nav-right{margin-left:auto;display:flex;align-items:center;gap:12px;padding:10px 0;}
 .kpi-nav{display:flex;flex-direction:column;align-items:flex-end;}
 .kpi-nav-lbl{font-size:.53rem;color:var(--g400);text-transform:uppercase;letter-spacing:.07em;}
-.kpi-nav-val{font-size:.88rem;font-weight:700;font-family:var(--font);}
+.kpi-nav-val{font-size:.88rem;font-weight:700;}
 .kpi-nav-val.or{color:var(--orange);}
 .kpi-nav-val.gr{color:var(--emerald);}
 .nav-sep{width:1px;height:26px;background:var(--border);}
@@ -80,11 +68,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .save-all-btn{font-size:.72rem;font-weight:700;padding:7px 14px;border-radius:var(--r6);border:none;background:var(--brand);color:#fff;cursor:pointer;transition:background .15s;font-family:var(--font);}
 .save-all-btn:hover{background:var(--brand-dk);}
 .save-all-btn:disabled{opacity:.45;cursor:not-allowed;}
-
 /* KPI BAR */
 .kpi-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:16px 20px 0;}
-.kpi-card{background:var(--white);border-radius:var(--r12);padding:16px 18px;border:1px solid var(--border);display:flex;align-items:center;gap:12px;box-shadow:var(--sh1);transition:box-shadow .2s;}
-.kpi-card:hover{box-shadow:var(--sh2);}
+.kpi-card{background:var(--white);border-radius:var(--r12);padding:16px 18px;border:1px solid var(--border);display:flex;align-items:center;gap:12px;box-shadow:var(--sh1);}
 .kpi-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
 .ki-blue{background:var(--brand-lt);color:var(--brand);}
 .ki-orange{background:var(--orange-lt);color:var(--orange);}
@@ -92,23 +78,19 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .ki-amber{background:var(--amber-lt);color:var(--amber);}
 .kpi-val{font-size:1.5rem;font-weight:800;color:var(--text);line-height:1;}
 .kpi-lbl{font-size:.65rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-top:2px;}
-
 /* PAGE */
 .page{display:none;padding:16px 20px 32px;}
 .page.active{display:block;}
-
 /* TOOLBAR */
 .toolbar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center;}
 .filter-btn{font-size:.72rem;font-weight:500;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--white);color:var(--text3);cursor:pointer;transition:all .15s;}
 .filter-btn:hover{border-color:var(--brand);color:var(--brand);}
 .filter-btn.active{background:var(--brand);color:#fff;border-color:var(--brand);}
 .search-box{margin-left:auto;background:var(--white);border:1px solid var(--border);border-radius:20px;padding:7px 14px 7px 34px;color:var(--text);font-size:.78rem;width:220px;outline:none;font-family:var(--font);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:12px center;}
-.search-box:focus{border-color:var(--brand-md);box-shadow:0 0 0 3px rgba(79,70,229,.08);}
+.search-box:focus{border-color:var(--brand-md);}
 .search-box::placeholder{color:var(--g400);}
-
 /* GRID */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(540px,1fr));gap:14px;}
-
 /* CARD */
 .card{background:var(--white);border:1px solid var(--border);border-radius:var(--r12);overflow:hidden;transition:box-shadow .2s,border-color .2s;box-shadow:var(--sh1);}
 .card:hover{box-shadow:var(--sh2);border-color:var(--border2);}
@@ -130,14 +112,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .bd-diag{background:#fce7f3;color:#9d174d;}
 .chevron{color:var(--g400);font-size:.6rem;transition:transform .2s;flex-shrink:0;margin-top:4px;}
 .card.expanded .chevron{transform:rotate(180deg);}
-
 /* Progress */
 .prog-row{padding:0 16px 12px;}
 .prog-label{font-size:.63rem;color:var(--text3);margin-bottom:5px;display:flex;justify-content:space-between;font-weight:500;}
 .prog-label .pct{color:var(--brand);font-weight:700;}
 .prog-track{height:6px;background:var(--g100);border-radius:4px;overflow:hidden;}
 .prog-fill{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-md));border-radius:4px;transition:width .4s;}
-
 /* Hitos */
 .hitos-row{padding:0 16px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .hito-box{background:var(--g50);border:1px solid var(--border);border-radius:var(--r8);padding:9px 12px;}
@@ -148,7 +128,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .hito-overdue .hito-label,.hito-overdue input[type=date]{color:var(--rose)!important;}
 .hito-soon{border-color:#fcd34d!important;background:var(--amber-lt)!important;}
 .hito-soon .hito-label{color:var(--amber)!important;}
-
+.hito-check-row{display:flex;align-items:center;gap:6px;margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,0,0,.06);}
+.hito-check-row input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--emerald);}
+.hito-check-label{font-size:.62rem;font-weight:600;color:var(--text3);cursor:pointer;}
+.hito-check-row.checked .hito-check-label{color:var(--emerald);}
 /* Billing mini */
 .billing-mini{padding:0 16px 14px;display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .bm-box{border-radius:var(--r8);padding:10px 14px;border:1px solid var(--border);}
@@ -158,7 +141,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .bm-value{font-size:.95rem;font-weight:800;}
 .bm-presup .bm-value{color:var(--brand);}
 .bm-factur .bm-value{color:var(--emerald);}
-
 /* Card body */
 .card-body{display:none;border-top:2px solid var(--border);}
 .card.expanded .card-body{display:block;}
@@ -166,73 +148,55 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .section:last-child{border-bottom:none;}
 .sec-title{font-size:.62rem;font-weight:700;color:var(--brand-dk);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
 .sec-title::after{content:'';flex:1;height:1px;background:var(--border);}
-
-/* Fields */
 .fg{display:grid;gap:8px;}
 .fg3{grid-template-columns:1fr 1fr 1fr;}
 .field label{font-size:.6rem;font-weight:700;color:var(--text3);display:block;margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;}
 .field input,.field select{width:100%;background:var(--g50);border:1px solid var(--border);border-radius:var(--r6);color:var(--text);font-size:.76rem;padding:7px 10px;outline:none;transition:border-color .15s;font-family:var(--font);}
-.field input:focus,.field select:focus{border-color:var(--brand-md);box-shadow:0 0 0 3px rgba(79,70,229,.07);}
+.field input:focus,.field select:focus{border-color:var(--brand-md);}
 .field input[type=date]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.4;}
-
-/* Avance */
 .av-row{display:flex;align-items:center;gap:12px;}
 .av-row input[type=range]{flex:1;accent-color:var(--brand);cursor:pointer;}
 .av-row input[type=number]{width:58px;background:var(--g50);border:1px solid var(--border);border-radius:var(--r6);color:var(--brand);font-size:.82rem;font-weight:700;padding:5px 6px;text-align:center;outline:none;font-family:var(--font);}
-.av-row span{font-size:.72rem;color:var(--text3);font-weight:600;}
-
-/* Results & projects */
+.av-row span{font-size:.72rem;color:var(--text3);}
 .res-list{display:flex;flex-direction:column;gap:6px;}
 .res-item{display:flex;gap:8px;align-items:flex-start;}
 .res-num{font-size:.62rem;font-weight:700;color:var(--orange);min-width:18px;margin-top:2px;}
 .res-text{font-size:.76rem;color:var(--text2);line-height:1.5;}
 .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:7px;}
 .proj-chip{background:var(--brand-lt);border:1px solid #c3d8f7;border-left:3px solid var(--brand);border-radius:var(--r6);padding:7px 10px;font-size:.72rem;color:var(--brand-dk);line-height:1.4;font-weight:500;}
-
 /* Facturas */
 .fact-wrap{overflow-x:auto;}
 .fact-tbl{width:100%;border-collapse:collapse;min-width:720px;}
 .fact-tbl th{font-size:.6rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;text-align:left;padding:7px 10px;border-bottom:2px solid var(--border);background:var(--g50);white-space:nowrap;}
 .fact-tbl td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
-.fact-tbl tr:last-child td{border-bottom:none;}
 .fact-tbl tbody tr:hover td{background:var(--g50);}
 .fact-num{font-size:.65rem;font-weight:700;color:var(--text3);}
 .fact-in{background:var(--g50);border:1px solid var(--border);border-radius:var(--r4);color:var(--text);font-size:.72rem;padding:5px 8px;width:100px;text-align:right;outline:none;font-family:var(--font);}
-.fact-in:focus{border-color:var(--brand-md);}
 .fact-dt{background:var(--g50);border:1px solid var(--border);border-radius:var(--r4);color:var(--text);font-size:.66rem;padding:5px 7px;outline:none;cursor:pointer;font-family:var(--font);}
 .fact-dt::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.4;}
-.fact-dt:focus{border-color:var(--brand-md);}
 .fact-sel{background:var(--g50);border:1px solid var(--border);border-radius:var(--r4);color:var(--text);font-size:.66rem;padding:5px 7px;outline:none;cursor:pointer;font-family:var(--font);}
-.fact-sel option{background:#fff;}
 .ep{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:12px;white-space:nowrap;}
 .ep-pagado{background:var(--emerald-lt);color:var(--emerald);}
 .ep-pendiente{background:var(--rose-lt);color:var(--rose);}
 .ep-poremitir{background:var(--amber-lt);color:var(--amber);}
 .ep-porcobrar{background:var(--brand-lt);color:var(--brand);}
 .ep-porfacturar{background:#ede9fe;color:#5b21b6;}
-.fact-tot-row{background:var(--g50);}
-.fact-tot-row td{font-weight:700;font-size:.74rem;border-bottom:none!important;padding:9px 10px!important;color:var(--brand-dk);}
-
-/* Presupuestado con colores */
+.fact-tot-row td{font-weight:700;font-size:.74rem;border-bottom:none!important;padding:9px 10px!important;color:var(--brand-dk);background:var(--g50);}
 .cf-presup-pagado{color:var(--emerald);font-weight:700;background:var(--emerald-lt);}
 .cf-presup-pendiente{color:var(--orange);font-weight:700;background:var(--orange-lt);}
-
-/* Save btn */
 .save-btn{display:block;width:calc(100% - 32px);margin:12px 16px;padding:9px;background:var(--brand);border:none;border-radius:var(--r6);color:#fff;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;cursor:pointer;transition:background .15s;font-family:var(--font);}
 .save-btn:hover{background:var(--brand-dk);}
 .save-btn.saving{background:var(--teal);}
 .save-btn.saved{background:var(--emerald);}
 .save-btn.error{background:var(--rose);}
-
 /* CASHFLOW */
 .cf-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
 .cf-top h2{font-size:1.05rem;font-weight:700;color:var(--g900);}
 .cf-top p{font-size:.68rem;color:var(--text3);margin-top:2px;}
-.cf-ctrl{display:flex;align-items:center;gap:10px;}
+.cf-ctrl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .cf-yr-lbl{font-size:.65rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;}
 .cf-yr-in{background:var(--white);border:1px solid var(--border);border-radius:var(--r6);padding:6px 10px;color:var(--text);font-size:.74rem;font-weight:700;width:82px;outline:none;font-family:var(--font);}
-.cf-yr-in:focus{border-color:var(--brand-md);}
-.cf-legend{display:flex;gap:12px;flex-wrap:wrap;}
+.cf-legend{display:flex;gap:10px;flex-wrap:wrap;}
 .cf-li{display:flex;align-items:center;gap:5px;font-size:.64rem;font-weight:600;color:var(--text2);}
 .cf-ld{width:10px;height:10px;border-radius:2px;}
 .cf-chart{background:var(--white);border:1px solid var(--border);border-radius:var(--r12);padding:18px 20px;margin-bottom:14px;box-shadow:var(--sh1);}
@@ -251,12 +215,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .cf-tbl td{padding:8px 12px;border-bottom:1px solid var(--border);font-size:.7rem;text-align:right;white-space:nowrap;}
 .cf-tbl td:first-child{text-align:left;position:sticky;left:0;background:var(--white);z-index:1;color:var(--text2);font-weight:500;}
 .cf-tbl tbody tr:hover td{background:#f5f7ff;}
-.cf-tbl tbody tr:hover td:first-child{background:#eef2ff;}
 .cf-presup{color:var(--brand-dk);font-weight:600;}
 .cf-cobrar{color:var(--orange);font-weight:600;}
 .cf-real{color:var(--emerald);font-weight:600;}
 .cf-zero{color:var(--g400);}
-.cf-sep-row td{background:var(--brand-dk)!important;border-top:none!important;padding:7px 12px!important;}
+.cf-sep-row td{background:var(--brand-dk)!important;padding:7px 12px!important;}
 .cf-sep-row td:first-child{font-size:.65rem;font-weight:700;color:#fff!important;text-transform:uppercase;letter-spacing:.09em;background:var(--brand-dk)!important;}
 .cf-tot-row td{background:var(--g100)!important;border-top:2px solid var(--border)!important;font-weight:700;}
 .cf-tot-row td:first-child{font-size:.68rem;font-weight:700;color:var(--brand-dk);}
@@ -265,124 +228,77 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 .cf-tot-r{color:var(--emerald);font-size:.74rem!important;}
 .cf-acum-row td{background:var(--g50)!important;}
 .cf-acum-row td:first-child{color:var(--text3);font-size:.63rem;font-style:italic;}
-
-/* Toast */
-#toast{position:fixed;bottom:20px;right:20px;background:var(--g900);color:#fff;border-radius:var(--r8);padding:11px 18px;font-size:.75rem;font-weight:600;opacity:0;transform:translateY(8px);transition:all .22s;z-index:999;pointer-events:none;box-shadow:var(--sh3);}
-#toast.show{opacity:1;transform:translateY(0);}
-#toast.err{background:var(--rose);}
-
-::-webkit-scrollbar{width:6px;height:6px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--g200);border-radius:3px;}
-::-webkit-scrollbar-thumb:hover{background:var(--g300);}
-
-/* ── DASHBOARD ──────────────────────────────────────────────── */
+/* DASHBOARD */
 .db-header{margin-bottom:18px;}
 .db-title{font-size:1.15rem;font-weight:800;color:var(--g900);letter-spacing:-.02em;}
 .db-sub{font-size:.72rem;color:var(--text3);margin-top:3px;}
-
 .db-kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:16px;}
 @media(max-width:1200px){.db-kpi-grid{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:700px){.db-kpi-grid{grid-template-columns:repeat(2,1fr);}}
-
 .db-kpi-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r12);padding:16px;display:flex;align-items:center;gap:12px;box-shadow:var(--sh1);}
 .db-kpi-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .db-kpi-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;}
 .db-kpi-val{font-size:1.15rem;font-weight:800;color:var(--g900);line-height:1.1;}
 .db-kpi-lbl{font-size:.6rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-top:2px;}
-
-.db-row2{display:grid;grid-template-columns:1fr 380px;gap:14px;margin-bottom:14px;}
+.db-row2{display:grid;grid-template-columns:1fr 420px;gap:14px;margin-bottom:14px;}
 @media(max-width:1000px){.db-row2{grid-template-columns:1fr;}}
-
 .db-panel{background:var(--white);border:1px solid var(--border);border-radius:var(--r12);padding:18px 20px;box-shadow:var(--sh1);}
-.db-panel-lg{flex:1;}
 .db-panel-title{font-size:.72rem;font-weight:700;color:var(--g900);text-transform:uppercase;letter-spacing:.09em;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-
-/* Avance list */
 .db-avance-item{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .db-avance-item:last-child{margin-bottom:0;}
 .db-avance-name{font-size:.76rem;font-weight:600;color:var(--text2);min-width:110px;max-width:110px;}
 .db-avance-track{flex:1;height:8px;background:var(--g100);border-radius:4px;overflow:hidden;}
-.db-avance-fill{height:100%;border-radius:4px;transition:width .6s ease;}
+.db-avance-fill{height:100%;border-radius:4px;transition:width .6s;}
 .db-avance-pct{font-size:.72rem;font-weight:700;min-width:36px;text-align:right;}
-
-/* Donut */
-.db-donut-wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
-.db-donut{width:110px;height:110px;flex-shrink:0;}
-.db-donut-legend{display:flex;flex-direction:column;gap:7px;}
-.db-legend-item{display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--text2);}
-.db-legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
-.db-legend-val{font-weight:700;margin-left:auto;padding-left:8px;}
-
-/* Horizontal bars */
 .db-bar-item{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
 .db-bar-item:last-child{margin-bottom:0;}
 .db-bar-name{font-size:.72rem;font-weight:500;color:var(--text2);min-width:90px;max-width:90px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .db-bar-track{flex:1;height:22px;background:var(--g100);border-radius:var(--r4);overflow:hidden;position:relative;}
-.db-bar-fill{height:100%;border-radius:var(--r4);display:flex;align-items:center;padding-left:8px;transition:width .6s ease;}
+.db-bar-fill{height:100%;border-radius:var(--r4);display:flex;align-items:center;padding-left:8px;transition:width .6s;}
 .db-bar-fill span{font-size:.65rem;font-weight:700;color:#fff;white-space:nowrap;}
 .db-bar-val{font-size:.68rem;font-weight:700;color:var(--text2);min-width:80px;text-align:right;}
-
-/* Hitos list */
 .db-hito-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--g100);}
 .db-hito-item:last-child{border-bottom:none;}
 .db-hito-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
 .db-hito-info{flex:1;min-width:0;}
-.db-hito-empresa{font-size:.74rem;font-weight:700;color:var(--text);}
+.db-hito-empresa{font-size:.74rem;font-weight:700;}
 .db-hito-desc{font-size:.65rem;color:var(--text3);margin-top:1px;}
 .db-hito-date{font-size:.65rem;font-weight:600;flex-shrink:0;}
-
-/* Fact estado */
-.db-fact-estado{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.db-fest-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .db-fest-item{background:var(--g50);border-radius:var(--r8);padding:12px 14px;border:1px solid var(--border);}
 .db-fest-val{font-size:1.4rem;font-weight:800;color:var(--g900);line-height:1;}
 .db-fest-lbl{font-size:.62rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px;}
 .db-fest-amount{font-size:.72rem;font-weight:600;color:var(--text2);margin-top:4px;}
-
-/* Implementadora */
 .db-impl-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--g100);}
 .db-impl-item:last-child{border-bottom:none;}
 .db-impl-badge{font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:12px;flex-shrink:0;}
 .db-impl-count{font-size:1.1rem;font-weight:800;color:var(--g900);margin-left:auto;}
 .db-impl-sub{font-size:.65rem;color:var(--text3);}
-
-
-/* Hito presentado check */
-.hito-check-row{display:flex;align-items:center;gap:6px;margin-top:6px;padding-top:6px;border-top:1px solid rgba(0,0,0,.06);}
-.hito-check-row input[type=checkbox]{width:14px;height:14px;cursor:pointer;accent-color:var(--emerald);}
-.hito-check-label{font-size:.62rem;font-weight:600;color:var(--text3);}
-.hito-check-row.checked .hito-check-label{color:var(--emerald);}
-
-/* Dashboard desembolsos table */
-.db-desemb-table{width:100%;border-collapse:collapse;}
-.db-desemb-table th{font-size:.6rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;border-bottom:2px solid var(--border);text-align:left;background:var(--g50);}
-.db-desemb-table td{font-size:.74rem;padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
-.db-desemb-table tr:last-child td{border-bottom:none;}
-.db-desemb-table tr:hover td{background:var(--g50);}
+.db-tbl{width:100%;border-collapse:collapse;}
+.db-tbl th{font-size:.6rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;border-bottom:2px solid var(--border);text-align:left;background:var(--g50);}
+.db-tbl td{font-size:.74rem;padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.db-tbl tbody tr:last-child td{border-bottom:none;}
+.db-tbl tbody tr:hover td{background:var(--g50);}
 .db-pill{display:inline-flex;align-items:center;gap:4px;font-size:.62rem;font-weight:700;padding:2px 9px;border-radius:12px;}
 .dp-ok{background:var(--emerald-lt);color:var(--emerald);}
 .dp-pend{background:var(--amber-lt);color:var(--amber);}
+.dp-no{background:var(--rose-lt);color:var(--rose);}
 .dp-proceso{background:var(--brand-lt);color:var(--brand);}
-
-/* Dashboard hitos presentados */
-.db-hito-pres-table{width:100%;border-collapse:collapse;}
-.db-hito-pres-table th{font-size:.6rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:6px 10px;border-bottom:2px solid var(--border);text-align:left;background:var(--g50);}
-.db-hito-pres-table td{font-size:.74rem;padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
-.db-hito-pres-table tr:last-child td{border-bottom:none;}
-.db-hito-pres-table tr:hover td{background:var(--g50);}
-.db-check-icon{font-size:.9rem;}
-
+/* TOAST */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--g900);color:#fff;border-radius:var(--r8);padding:11px 18px;font-size:.75rem;font-weight:600;opacity:0;transform:translateY(8px);transition:all .22s;z-index:999;pointer-events:none;box-shadow:var(--sh3);}
+#toast.show{opacity:1;transform:translateY(0);}
+#toast.err{background:var(--rose);}
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--g200);border-radius:3px;}
 </style>
 </head>
 <body>
-
 <div id="loading-overlay">
   <div class="loader-logo">PROINNOVATE</div>
   <div class="loader-sub">Panel de Control · Mipymes Digitales</div>
   <div class="loader-bar"><div class="loader-fill"></div></div>
-  <div class="loader-msg" id="loader-msg">Conectando con Google Sheets…</div>
+  <div class="loader-msg" id="loader-msg">Conectando…</div>
 </div>
-
 <div id="config-banner">
   <div class="cb-title">⚙ Configuración requerida</div>
   <div class="cb-body">Ingresa la URL de tu Apps Script.<br><code>https://script.google.com/macros/s/…/exec</code></div>
@@ -391,14 +307,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
     <button class="cb-btn" onclick="saveScriptUrl()">Conectar</button>
   </div>
 </div>
-
 <nav class="top-nav">
-  <div class="top-nav-left">
-    <div>
-      <div class="logo">PROINNOVATE</div>
-      <div class="logo-sub">Mipymes Digitales</div>
-    </div>
-  </div>
+  <div class="top-nav-left"><div><div class="logo">PROINNOVATE</div><div class="logo-sub">Mipymes Digitales</div></div></div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showPage('proyectos',this)">▦ Proyectos</button>
     <button class="nav-tab" onclick="showPage('cashflow',this)">▤ Flujo de Caja</button>
@@ -409,18 +319,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
     <div class="nav-sep"></div>
     <div class="kpi-nav"><span class="kpi-nav-lbl">Facturado</span><span class="kpi-nav-val gr" id="stt-factur">S/ 0</span></div>
     <div class="nav-sep"></div>
-    <div class="sync-pill"><div class="sync-dot" id="sync-dot"></div><span class="sync-lbl" id="sync-label">Sincronizado</span></div>
+    <div class="sync-pill"><div class="sync-dot" id="sync-dot"></div><span class="sync-lbl" id="sync-label">–</span></div>
     <button class="save-all-btn" id="save-all-btn" onclick="saveAll()">Guardar Todo</button>
   </div>
 </nav>
-
 <div class="kpi-bar" id="kpi-bar">
   <div class="kpi-card"><div class="kpi-icon ki-blue">📋</div><div><div class="kpi-val" id="kpi-total">0</div><div class="kpi-lbl">Proyectos totales</div></div></div>
   <div class="kpi-card"><div class="kpi-icon ki-orange">🔄</div><div><div class="kpi-val" id="kpi-activos">0</div><div class="kpi-lbl">Con avance registrado</div></div></div>
   <div class="kpi-card"><div class="kpi-icon ki-green">✅</div><div><div class="kpi-val" id="kpi-facturado">S/ 0</div><div class="kpi-lbl">Total facturado</div></div></div>
   <div class="kpi-card"><div class="kpi-icon ki-amber">⚠</div><div><div class="kpi-val" id="kpi-vencidos">0</div><div class="kpi-lbl">Hitos vencidos</div></div></div>
 </div>
-
 <div class="page active" id="page-proyectos">
   <div class="toolbar">
     <button class="filter-btn active" data-filter="all">Todos</button>
@@ -431,7 +339,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   </div>
   <div class="grid" id="grid"></div>
 </div>
-
 <div class="page" id="page-cashflow">
   <div class="cf-top">
     <div><h2>Flujo de Caja</h2><p>Presupuestado · Facturas pagadas · Pendiente de pago — por mes y empresa</p></div>
@@ -450,11 +357,36 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
   <div class="cf-chart" id="cf-chart"></div>
   <div class="cf-scroll"><table class="cf-tbl" id="cf-table"></table></div>
 </div>
-
+<div class="page" id="page-dashboard">
+  <div class="db-header"><h2 class="db-title">Dashboard</h2><p class="db-sub">Indicadores clave del portafolio PROINNOVATE · Mipymes Digitales</p></div>
+  <div class="db-kpi-grid">
+    <div class="db-kpi-card"><div class="db-kpi-icon" style="background:var(--brand-lt);color:var(--brand)"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><div class="db-kpi-val" id="db-presup">S/ 0</div><div class="db-kpi-lbl">Total Presupuestado</div></div></div>
+    <div class="db-kpi-card"><div class="db-kpi-icon" style="background:var(--emerald-lt);color:var(--emerald)"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="db-kpi-val" id="db-facturado">S/ 0</div><div class="db-kpi-lbl">Total Facturado</div></div></div>
+    <div class="db-kpi-card"><div class="db-kpi-icon" style="background:var(--amber-lt);color:var(--amber)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="db-kpi-val" id="db-pendiente">S/ 0</div><div class="db-kpi-lbl">Por Cobrar / Emitir</div></div></div>
+    <div class="db-kpi-card"><div class="db-kpi-icon" style="background:#ede9fe;color:#5b21b6"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div><div class="db-kpi-val" id="db-ejecucion">0%</div><div class="db-kpi-lbl">Ejecución Financiera</div></div></div>
+    <div class="db-kpi-card"><div class="db-kpi-icon" style="background:var(--rose-lt);color:var(--rose)"><svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div><div class="db-kpi-val" id="db-vencidos2">0</div><div class="db-kpi-lbl">Hitos Vencidos</div></div></div>
+    <div class="db-kpi-card"><div class="db-kpi-icon" style="background:var(--teal-lt);color:var(--teal)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div class="db-kpi-val" id="db-h2pres">0/0</div><div class="db-kpi-lbl">Hito 2 Presentados</div></div></div>
+  </div>
+  <div class="db-row2">
+    <div class="db-panel"><div class="db-panel-title">Avance de Implementación por Empresa</div><div id="db-avance-list"></div></div>
+    <div class="db-panel"><div class="db-panel-title">Facturación por Empresa (S/)</div><div id="db-fact-bars"></div></div>
+  </div>
+  <div class="db-row2">
+    <div class="db-panel"><div class="db-panel-title">Estado de Desembolsos por Empresa</div><div style="overflow-x:auto"><table class="db-tbl"><thead><tr><th>Empresa</th><th>1er Desembolso</th><th>2do Desembolso</th></tr></thead><tbody id="db-desemb-body"></tbody></table></div></div>
+    <div class="db-panel"><div class="db-panel-title">Hitos Próximos y Vencidos</div><div id="db-hitos-list"></div></div>
+  </div>
+  <div class="db-row2">
+    <div class="db-panel"><div class="db-panel-title">Estado de Facturas</div><div class="db-fest-grid" id="db-fact-estado"></div></div>
+    <div class="db-panel"><div class="db-panel-title">Proyectos por Implementadora</div><div id="db-impl-wrap"></div></div>
+  </div>
+  <div style="margin-bottom:14px">
+    <div class="db-panel"><div class="db-panel-title">Estado de Presentación de Hitos a PROINNOVATE</div><div style="overflow-x:auto"><table class="db-tbl"><thead><tr><th>Empresa</th><th>Fecha Hito 2</th><th>Hito 2</th><th>Fecha Hito 3</th><th>Hito 3</th></tr></thead><tbody id="db-hitos-pres-body"></tbody></table></div></div>
+  </div>
+</div>
 <div id="toast">✓ Guardado</div>
-
 <script>
 const HARDCODED_SCRIPT_URL='https://script.google.com/macros/s/AKfycbwt7OnchAmx6kZgr1KKK9FvDIcSXYEZGXIcHitwNkp8gBDLypT4NjHkHd_jHxuSxPIaRg/exec';
+const URL_KEY='proinnovate_panel_url';
 const INITIAL=[
   {id:1,empresa:'Aline',correo:'NELLYARMAS20@HOTMAIL.COM',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-05-23',hito3:'2026-06-23',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Alcanzar el 10% de las ventas mensuales totales con el delivery','Aumentar en 15% las visitas diarias en el corto plazo','Incrementar nuestra presencia digital en un 90%'],proyectos:['Base Operativa Digital y Control del Negocio (POS/ERP + Comandas/KDS)','Rentabilidad y Eficiencia Operativa (Inventarios/Mermas + Recetario/Costeo + Control financiero)','Crecimiento Comercial y Gestión Basada en Datos (WhatsApp Business + CRM + Marketing + KPIs)'],facturas:[{presup:21307.20,facturado:21307.20,fechaEsperada:'2026-03-26',fechaEmision:null,fechaPago:null,estado:'Por cobrar'},{presup:12784.32,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:8522.88,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
   {id:2,empresa:'Iper Captiva',correo:'',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'',hito3:'',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:[],proyectos:[],facturas:[{presup:12784.32,facturado:12784.32,fechaEsperada:'2025-11-25',fechaEmision:'2025-11-25',fechaPago:null,estado:'Pagado'},{presup:17045.76,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:12784.33,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
@@ -468,15 +400,18 @@ const INITIAL=[
   {id:10,empresa:'DL Varkoo',correo:'avargas140364@gmail.com',primerD:'Desembolsado',segundoD:'Pendiente',implementadora:'Parking',hito2:'2026-05-01',hito3:'2026-09-01',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Plataforma centralizada que unifique información de distintas áreas.','Área de marketing digital fortalecida para captación y fidelización de clientes.','Dashboard de KPIs financieros para monitoreo en tiempo real.','Sistema integrado con módulos existentes para mayor eficiencia operativa.'],proyectos:['Implementación de módulo ERP Restaurante','Implementación de Marketing Digital','Rediseño de Página Web','Auditoría Buyer Persona'],facturas:[{presup:21306.78,facturado:21306.78,fechaEsperada:'2026-03-24',fechaEmision:'2026-03-24',fechaPago:null,estado:'Pagado'},{presup:6781.10,facturado:null,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4357.63,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10169.49,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
   {id:11,empresa:'VK Studio',correo:'',primerD:'Pendiente',segundoD:'Pendiente',implementadora:'Underdog',hito2:'2026-06-17',hito3:'2026-11-02',hito2Presentado:false,hito3Presentado:false,avance:0,resultados:['Incrementar las ventas mensuales en un 30% mediante integración de plataformas de comercio.','Aumentar en un 20% la tasa de conversión de pedidos digitales.','Expandir la presencia en redes sociales en un 50%.','App móvil propia con al menos 5,000 descargas en los primeros 6 meses.'],proyectos:['Implementación de módulo ERP + RRHH','Implementación de CRM','Implementación de Elearning','Marketing Digital y Diseño'],facturas:[{presup:23728.81,facturado:0,fechaEsperada:'2026-05-01',fechaEmision:null,fechaPago:null,estado:'Por facturar'},{presup:4358.35,facturado:null,fechaEsperada:'2026-06-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:4358.35,facturado:null,fechaEsperada:'2026-07-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:10168.50,facturado:null,fechaEsperada:'2026-08-01',fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'},{presup:0,facturado:null,fechaEsperada:null,fechaEmision:null,fechaPago:null,estado:'Por emitir'}]},
 ];
+
 const EF=['Pendiente','Por emitir','Por cobrar','Pagado','Por facturar'];
 const ED=['Desembolsado','Pendiente','En proceso','Diagnóstico'];
-const URL_KEY='proinnovate_script_url';
 const MN=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-let projects=[],curFilter='all',expandedCards=new Set();
-const today=new Date();today.setHours(0,0,0,0);
+const COLORS=['#4f46e5','#0891b2','#059669','#d97706','#7c3aed','#e11d48','#0f766e','#9333ea','#c2410c','#0369a1','#15803d'];
+let projects=[], curFilter='all', expandedCards=new Set();
+const today=new Date(); today.setHours(0,0,0,0);
+
 function dc(ds){if(!ds)return'';const d=new Date(ds+'T00:00:00');const diff=(d-today)/86400000;if(diff<0)return'hito-overdue';if(diff<=14)return'hito-soon';return'';}
 function fmt(n){if(n===null||n===undefined||n==='')return'—';return'S/ '+Number(n).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function fmtK(n){if(!n)return'S/ 0';const v=Number(n);if(v>=1000000)return'S/ '+(v/1000000).toFixed(1)+'M';if(v>=1000)return'S/ '+(v/1000).toFixed(1)+'K';return'S/ '+v.toLocaleString('es-PE',{minimumFractionDigits:0});}
+function fmtN(n){if(!n||n===0)return'0';if(n>=1000000)return(n/1000000).toFixed(1)+'M';if(n>=1000)return(n/1000).toFixed(1)+'K';return Math.round(n).toLocaleString('es-PE');}
 function epC(e){const m={'Pagado':'ep-pagado','Pendiente':'ep-pendiente','Por emitir':'ep-poremitir','Por cobrar':'ep-porcobrar','Por facturar':'ep-porfacturar'};return m[e]||'ep-poremitir';}
 function implC(v){if(v==='Underdog')return'bi-underdog';if(v==='Parking')return'bi-parking';return'bi-none';}
 function dC(v){if(v==='Desembolsado')return'bd-ok';if(v==='Diagnóstico')return'bd-diag';return'bd-pend';}
@@ -484,227 +419,34 @@ function tP(p){return p.facturas.reduce((s,f)=>s+Number(f.presup||0),0);}
 function tF(p){return p.facturas.reduce((s,f)=>s+Number(f.facturado||0),0);}
 function setSS(state,msg){const d=document.getElementById('sync-dot'),l=document.getElementById('sync-label');d.className='sync-dot'+(state==='syncing'?' syncing':state==='error'?' error':'');l.textContent=msg;}
 function getURL(){return HARDCODED_SCRIPT_URL||localStorage.getItem(URL_KEY)||'';}
-function saveScriptUrl(){const url=document.getElementById('script-url-input').value.trim();if(!url||!url.startsWith('https://script.google.com')){alert('URL inválida');return;}localStorage.setItem(URL_KEY,url);document.getElementById('config-banner').classList.remove('show');
-function toggleHitoPres(id, field, val){
-  const p=projects.find(x=>x.id===id); if(!p)return;
-  p[field]=val;
-  const row=document.getElementById((field==='hito2Presentado'?'h2c-':'h3c-')+id)?.closest('.hito-check-row');
-  if(row) row.classList.toggle('checked', val);
-}
+function saveScriptUrl(){const url=document.getElementById('script-url-input').value.trim();if(!url||!url.startsWith('https://script.google.com')){alert('URL inválida');return;}localStorage.setItem(URL_KEY,url);document.getElementById('config-banner').classList.remove('show');loadFromSheets();}
+function setLM(m){document.getElementById('loader-msg').textContent=m;}
+function hideLoader(){const ol=document.getElementById('loading-overlay');ol.classList.add('hidden');setTimeout(()=>ol.style.display='none',500);}
+setTimeout(()=>{try{hideLoader();}catch(e){}},8000);
 
-loadFromSheets();}
-// ── DASHBOARD ─────────────────────────────────────────────────
-function renderDashboard(){
-  const MN2=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  const today2=new Date(); today2.setHours(0,0,0,0);
-
-  // ── Totales financieros
-  const totalPresup=projects.reduce((s,p)=>s+tP(p),0);
-  const totalFactur=projects.reduce((s,p)=>s+tF(p),0);
-  const totalPend=projects.reduce((s,p)=>{
-    return s+p.facturas.reduce((ss,f)=>{
-      if(['Por emitir','Por cobrar','Pendiente','Por facturar'].includes(f.estado)&&f.presup>0) return ss+Number(f.presup||0);
-      return ss;
-    },0);
-  },0);
-  const ejec=totalPresup>0?Math.round((totalFactur/totalPresup)*100):0;
-  const vencidos=projects.filter(p=>(p.hito2&&new Date(p.hito2)<today2)||(p.hito3&&new Date(p.hito3)<today2)).length;
-
-  document.getElementById('db-presup').textContent=fmtK(totalPresup);
-  document.getElementById('db-facturado').textContent=fmtK(totalFactur);
-  document.getElementById('db-pendiente').textContent=fmtK(totalPend);
-  document.getElementById('db-ejecucion').textContent=ejec+'%';
-  document.getElementById('db-empresas').textContent=projects.length;
-  const vEl=document.getElementById('db-vencidos');
-  vEl.textContent=vencidos;
-  vEl.style.color=vencidos>0?'var(--rose)':'var(--g900)';
-
-  // ── Avance por empresa
-  const COLORS_DB=['#4f46e5','#0891b2','#059669','#d97706','#7c3aed','#e11d48','#0f766e','#9333ea','#c2410c','#0369a1','#15803d'];
-  const avEl=document.getElementById('db-avance-list');
-  const sortedByAvance=[...projects].sort((a,b)=>b.avance-a.avance);
-  avEl.innerHTML=sortedByAvance.map((p,i)=>{
-    const col=COLORS_DB[i%COLORS_DB.length];
-    const avp=Number(p.avance)||0;
-    return `<div class="db-avance-item">
-      <div class="db-avance-name" title="${p.empresa}">${p.empresa}</div>
-      <div class="db-avance-track"><div class="db-avance-fill" style="width:${avp}%;background:${col}"></div></div>
-      <div class="db-avance-pct" style="color:${col}">${avp}%</div>
-    </div>`;
-  }).join('');
-
-  // ── Tabla desembolsos por empresa
-  function dPill(v){ const ok=v==='Desembolsado'; const proc=v==='En proceso'||v==='Diagnóstico';
-    const cls=ok?'dp-ok':proc?'dp-proceso':'dp-pend';
-    const icon=ok?'✓':proc?'⟳':'✕';
-    return `<span class="db-pill ${cls}">${icon} ${v||'Pendiente'}</span>`;
-  }
-  const desembBody=document.getElementById('db-desemb-body');
-  if(desembBody){
-    desembBody.innerHTML=projects.map(p=>`<tr>
-      <td style="font-weight:600">${p.empresa}</td>
-      <td>${dPill(p.primerD)}</td>
-      <td>${dPill(p.segundoD)}</td>
-    </tr>`).join('');
-  }
-
-  // ── Barras horizontales: facturación por empresa
-  const maxFact=Math.max(...projects.map(p=>tP(p)),1);
-  const sortedByFact=[...projects].sort((a,b)=>tP(b)-tP(a));
-  document.getElementById('db-fact-bars').innerHTML=sortedByFact.map((p,i)=>{
-    const tp2=tP(p), tf2=tF(p);
-    const wpresup=Math.round((tp2/maxFact)*100);
-    const wfact=tp2>0?Math.round((tf2/tp2)*100):0;
-    const col=COLORS_DB[i%COLORS_DB.length];
-    return `<div class="db-bar-item">
-      <div class="db-bar-name" title="${p.empresa}">${p.empresa}</div>
-      <div class="db-bar-track" style="position:relative">
-        <div style="position:absolute;inset:0;background:${col}18;border-radius:var(--r4)"></div>
-        <div class="db-bar-fill" style="width:${wfact}%;background:${col}">
-          ${wfact>15?`<span>S/ ${fmtNum(tf2)}</span>`:''}
-        </div>
-      </div>
-      <div class="db-bar-val">S/ ${fmtNum(tp2)}</div>
-    </div>`;
-  }).join('');
-
-  // ── Hitos próximos (próximos 60 días) y vencidos
-  const hitosEl=document.getElementById('db-hitos-list');
-  const hitos=[];
-  projects.forEach(p=>{
-    if(p.hito2){const d=new Date(p.hito2+'T00:00:00');const diff=Math.round((d-today2)/86400000);hitos.push({empresa:p.empresa,label:'Hito 2',fecha:p.hito2,diff,d});}
-    if(p.hito3){const d=new Date(p.hito3+'T00:00:00');const diff=Math.round((d-today2)/86400000);hitos.push({empresa:p.empresa,label:'Hito 3',fecha:p.hito3,diff,d});}
-  });
-  hitos.sort((a,b)=>a.diff-b.diff);
-  const hitosFiltered=hitos.filter(h=>h.diff<=60);
-  if(hitosFiltered.length===0){
-    hitosEl.innerHTML='<div style="padding:20px;text-align:center;color:var(--text3);font-size:.76rem">No hay hitos en los próximos 60 días</div>';
-  } else {
-    hitosEl.innerHTML=hitosFiltered.map(h=>{
-      const isVenc=h.diff<0;
-      const isSoon=h.diff>=0&&h.diff<=14;
-      const col=isVenc?'var(--rose)':isSoon?'var(--amber)':'var(--emerald)';
-      const label=isVenc?`Vencido hace ${Math.abs(h.diff)} días`:h.diff===0?'Hoy':h.diff===1?'Mañana':`En ${h.diff} días`;
-      const fechaFmt=new Date(h.fecha+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'short'});
-      return `<div class="db-hito-item">
-        <div class="db-hito-dot" style="background:${col}"></div>
-        <div class="db-hito-info">
-          <div class="db-hito-empresa">${h.empresa}</div>
-          <div class="db-hito-desc">${h.label} · ${fechaFmt}</div>
-        </div>
-        <div class="db-hito-date" style="color:${col}">${label}</div>
-      </div>`;
-    }).join('');
-  }
-
-  // ── Estado de facturas
-  const estados={Pagado:{count:0,monto:0},
-    'Por cobrar':{count:0,monto:0},
-    'Por emitir':{count:0,monto:0},
-    'Por facturar':{count:0,monto:0}};
-  projects.forEach(p=>p.facturas.forEach(f=>{
-    if(f.presup>0){
-      const k=estados[f.estado]?f.estado:'Por emitir';
-      if(estados[k]){estados[k].count++;estados[k].monto+=Number(f.presup||0);}
-    }
-  }));
-  const estColors={Pagado:'var(--emerald)','Por cobrar':'var(--brand)','Por emitir':'var(--amber)','Por facturar':'#7c3aed'};
-  document.getElementById('db-fact-estado').innerHTML=Object.entries(estados).map(([k,v])=>`
-    <div class="db-fest-item">
-      <div class="db-fest-val" style="color:${estColors[k]||'var(--g900)'}">${v.count}</div>
-      <div class="db-fest-lbl">${k}</div>
-      <div class="db-fest-amount">S/ ${fmtNum(v.monto)}</div>
-    </div>`).join('');
-
-  // ── Proyectos por implementadora
-  const impl={};
-  projects.forEach(p=>{const k=p.implementadora||'Sin asignar';if(!impl[k])impl[k]={count:0,presup:0};impl[k].count++;impl[k].presup+=tP(p);});
-  const implColors={'Underdog':'#5b21b6','Parking':'var(--brand)','Sin asignar':'var(--g400)'};
-  const implBg={'Underdog':'#ede9fe','Parking':'var(--brand-lt)','Sin asignar':'var(--g100)'};
-  document.getElementById('db-impl-wrap').innerHTML=Object.entries(impl).sort((a,b)=>b[1].count-a[1].count).map(([k,v])=>`
-    <div class="db-impl-item">
-      <div>
-        <div class="db-impl-badge" style="background:${implBg[k]||'var(--g100)'};color:${implColors[k]||'var(--g600)'}">${k}</div>
-        <div class="db-impl-sub" style="margin-top:3px">S/ ${fmtNum(v.presup)} presupuestado</div>
-      </div>
-      <div style="text-align:right">
-        <div class="db-impl-count">${v.count}</div>
-        <div class="db-impl-sub">empresa${v.count!==1?'s':''}</div>
-      </div>
-    </div>`).join('');
-
-  // ── Tabla estado presentación de hitos
-  const hitosPresBody=document.getElementById('db-hitos-pres-body');
-  if(hitosPresBody){
-    function fmtDate(d){ if(!d)return '<span style="color:var(--g400)">—</span>'; return new Date(d+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'2-digit'}); }
-    function presBadge(pres,fecha){
-      if(!fecha) return '<span style="color:var(--g400);font-size:.7rem">Sin fecha</span>';
-      if(pres) return '<span class="db-pill dp-ok">✓ Presentado</span>';
-      const diff=Math.round((new Date(fecha+'T00:00:00')-today2)/86400000);
-      if(diff<0) return '<span class="db-pill dp-pend">✕ No presentado</span>';
-      return '<span class="db-pill dp-proceso">⟳ Pendiente</span>';
-    }
-    hitosPresBody.innerHTML=projects.map(p=>`<tr>
-      <td style="font-weight:600">${p.empresa}</td>
-      <td>${fmtDate(p.hito2)}</td>
-      <td>${presBadge(p.hito2Presentado,p.hito2)}</td>
-      <td>${fmtDate(p.hito3)}</td>
-      <td>${presBadge(p.hito3Presentado,p.hito3)}</td>
-    </tr>`).join('');
-  }
-}
-
-function fmtNum(n){
-  if(!n||n===0)return '0';
-  if(n>=1000000)return (n/1000000).toFixed(1)+'M';
-  if(n>=1000)return (n/1000).toFixed(1)+'K';
-  return Math.round(n).toLocaleString('es-PE');
-}
-
-function renderDonut(svgId, legendId, data, total){
-  const svg=document.getElementById(svgId);
-  const legend=document.getElementById(legendId);
-  if(!svg||!legend)return;
-  const cx=60,cy=60,r=45,stroke=14;
-  const circum=2*Math.PI*r;
-  let offset=0;
-  let paths='';
-  data.forEach(d=>{
-    const pct=d.val/total;
-    const dash=pct*circum;
-    const gap=circum-dash;
-    paths+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${stroke}" stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}" stroke-dashoffset="${-offset.toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;
-    offset+=pct*circum;
-  });
-  paths+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="16" font-weight="800" fill="var(--g900)">${total}</text>`;
-  paths+=`<text x="${cx}" y="${cy+12}" text-anchor="middle" font-size="8" fill="var(--text3)">EMPRESAS</text>`;
-  svg.innerHTML=paths;
-  legend.innerHTML=data.map(d=>`<div class="db-legend-item">
-    <div class="db-legend-dot" style="background:${d.color}"></div>
-    <span>${d.label}</span>
-    <span class="db-legend-val">${d.val}</span>
-  </div>`).join('');
-}
-
-loadFromSheets();}
 async function loadFromSheets(){
-  const url=getURL();setLM('Conectando con Google Sheets…');
-  if(!url){projects=JSON.parse(JSON.stringify(INITIAL));renderAll();hideLoader();document.getElementById('config-banner').classList.add('show');setSS('error','Sin configurar');return;}
-  try{setLM('Cargando datos…');const res=await fetch(url,{method:'GET',redirect:'follow'});const data=await res.json();
-    if(data.status==='ok'&&data.projects&&data.projects.length>0){projects=data.projects;setSS('ok','Sincronizado');}
-    else{projects=JSON.parse(JSON.stringify(INITIAL));setSS('ok','Datos iniciales');await push();}
-  }catch(e){projects=JSON.parse(JSON.stringify(INITIAL));setSS('error','Sin conexión');showToast('Sin conexión con Google Sheets',true);}
-  renderAll();hideLoader();
+  try{
+    const url=getURL(); setLM('Conectando…');
+    if(!url){projects=JSON.parse(JSON.stringify(INITIAL));renderAll();hideLoader();document.getElementById('config-banner').classList.add('show');setSS('error','Sin configurar');return;}
+    try{
+      setLM('Cargando datos…');
+      const res=await fetch(url,{method:'GET',redirect:'follow'});
+      const data=await res.json();
+      if(data.status==='ok'&&data.projects&&data.projects.length>0){projects=data.projects;setSS('ok','Sincronizado');}
+      else{projects=JSON.parse(JSON.stringify(INITIAL));setSS('ok','Datos iniciales');await pushToSheets();}
+    }catch(e){projects=JSON.parse(JSON.stringify(INITIAL));setSS('error','Sin conexión');showToast('Sin conexión con Google Sheets',true);}
+    renderAll();hideLoader();
+  }catch(fatal){console.error(fatal);hideLoader();}
 }
-async function push(){
+async function pushToSheets(){
   const url=getURL();if(!url)return false;setSS('syncing','Guardando…');
-  try{const res=await fetch(url,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain'},body:JSON.stringify({projects})});const data=await res.json();
+  try{
+    const res=await fetch(url,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain'},body:JSON.stringify({projects})});
+    const data=await res.json();
     if(data.status==='ok'){setSS('ok','Guardado · '+new Date().toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit'}));return true;}
     setSS('error','Error al guardar');return false;
   }catch(e){setSS('error','Sin conexión');return false;}
 }
-function setLM(m){document.getElementById('loader-msg').textContent=m;}
-function hideLoader(){const ol=document.getElementById('loading-overlay');ol.classList.add('hidden');setTimeout(()=>ol.style.display='none',500);}
 
 function renderCard(p){
   const tp=tP(p),tf=tF(p),avp=Math.min(100,Math.max(0,Number(p.avance)||0));
@@ -718,8 +460,10 @@ function renderCard(p){
     <td><select class="fact-sel" onchange="uF(${p.id},${i},'estado',this.value);uPill(this)">${EF.map(e=>`<option${e===f.estado?' selected':''}>${e}</option>`).join('')}</select></td>
     <td><span class="ep ${epC(f.estado)}" id="pill-${p.id}-${i}">${f.estado}</span></td>
   </tr>`).join('');
-  const res=p.resultados.length?p.resultados.map((r,i)=>`<div class="res-item"><span class="res-num">R${i+1}</span><span class="res-text">${r}</span></div>`).join(''):'<span style="font-size:.7rem;color:var(--text4)">Sin resultados registrados</span>';
-  const proj=p.proyectos.length?p.proyectos.map(x=>`<div class="proj-chip">${x}</div>`).join(''):'<span style="font-size:.7rem;color:var(--text4)">Sin proyectos registrados</span>';
+  const res=p.resultados&&p.resultados.length?p.resultados.map((r,i)=>`<div class="res-item"><span class="res-num">R${i+1}</span><span class="res-text">${r}</span></div>`).join(''):'<span style="font-size:.7rem;color:var(--text3)">Sin resultados registrados</span>';
+  const proj=p.proyectos&&p.proyectos.length?p.proyectos.map(x=>`<div class="proj-chip">${x}</div>`).join(''):'<span style="font-size:.7rem;color:var(--text3)">Sin proyectos registrados</span>';
+  const h2pres=p.hito2Presentado||false;
+  const h3pres=p.hito3Presentado||false;
   return `<div class="card" id="card-${p.id}">
   <div class="card-stripe"></div>
   <div class="card-top" onclick="toggle(${p.id})">
@@ -735,17 +479,17 @@ function renderCard(p){
     <div class="hito-box ${dc(p.hito2)}" id="h2-${p.id}">
       <div class="hito-label">Hito 2${dc(p.hito2)==='hito-overdue'?' ⚠ Vencido':''}</div>
       <input type="date" value="${p.hito2||''}" onchange="uField(${p.id},'hito2',this.value);rHito(${p.id},'hito2',this.value)">
-      <div class="hito-check-row${p.hito2Presentado?' checked':''}">
-        <input type="checkbox" id="h2c-${p.id}" ${p.hito2Presentado?'checked':''} onclick="event.stopPropagation();toggleHitoPres(${p.id},'hito2Presentado',this.checked)">
-        <label class="hito-check-label" for="h2c-${p.id}">Hito presentado a PROINNOVATE</label>
+      <div class="hito-check-row${h2pres?' checked':''}">
+        <input type="checkbox" id="h2c-${p.id}" ${h2pres?'checked':''} onclick="event.stopPropagation();toggleHitoPres(${p.id},'hito2Presentado',this.checked)">
+        <label class="hito-check-label" for="h2c-${p.id}">Presentado a PROINNOVATE</label>
       </div>
     </div>
     <div class="hito-box ${dc(p.hito3)}" id="h3-${p.id}">
       <div class="hito-label">Hito 3${dc(p.hito3)==='hito-overdue'?' ⚠ Vencido':''}</div>
       <input type="date" value="${p.hito3||''}" onchange="uField(${p.id},'hito3',this.value);rHito(${p.id},'hito3',this.value)">
-      <div class="hito-check-row${p.hito3Presentado?' checked':''}">
-        <input type="checkbox" id="h3c-${p.id}" ${p.hito3Presentado?'checked':''} onclick="event.stopPropagation();toggleHitoPres(${p.id},'hito3Presentado',this.checked)">
-        <label class="hito-check-label" for="h3c-${p.id}">Hito presentado a PROINNOVATE</label>
+      <div class="hito-check-row${h3pres?' checked':''}">
+        <input type="checkbox" id="h3c-${p.id}" ${h3pres?'checked':''} onclick="event.stopPropagation();toggleHitoPres(${p.id},'hito3Presentado',this.checked)">
+        <label class="hito-check-label" for="h3c-${p.id}">Presentado a PROINNOVATE</label>
       </div>
     </div>
   </div>
@@ -784,9 +528,10 @@ function renderCard(p){
 }
 
 function renderAll(){
-  const s=document.getElementById('search').value.toLowerCase();
+  updateStats();
+  const q=document.getElementById('search').value.toLowerCase();
   const f=projects.filter(p=>{
-    if(!p.empresa.toLowerCase().includes(s))return false;
+    if(!p.empresa.toLowerCase().includes(q))return false;
     if(curFilter==='Underdog')return p.implementadora==='Underdog';
     if(curFilter==='Parking')return p.implementadora==='Parking';
     if(curFilter==='overdue')return(p.hito2&&new Date(p.hito2)<today)||(p.hito3&&new Date(p.hito3)<today);
@@ -794,11 +539,12 @@ function renderAll(){
   });
   document.getElementById('grid').innerHTML=f.map(renderCard).join('');
   f.forEach(p=>{if(expandedCards.has(p.id))document.getElementById('card-'+p.id)?.classList.add('expanded');});
-  updateStats();
 }
+
 function toggle(id){const c=document.getElementById('card-'+id);if(!c)return;c.classList.toggle('expanded');if(c.classList.contains('expanded'))expandedCards.add(id);else expandedCards.delete(id);}
 function uField(id,f,v){const p=projects.find(x=>x.id===id);if(p)p[f]=v;}
 function rHito(id,f,v){const bid=(f==='hito2'?'h2-':'h3-')+id;const box=document.getElementById(bid);if(!box)return;const cls=dc(v);box.className='hito-box '+cls;const lbl=box.querySelector('.hito-label');if(lbl)lbl.textContent=(f==='hito2'?'Hito 2':'Hito 3')+(cls==='hito-overdue'?' ⚠ Vencido':'');}
+function toggleHitoPres(id,field,val){const p=projects.find(x=>x.id===id);if(!p)return;p[field]=val;const row=document.getElementById((field==='hito2Presentado'?'h2c-':'h3c-')+id)?.closest('.hito-check-row');if(row)row.classList.toggle('checked',val);}
 function uF(id,fi,field,val){
   const p=projects.find(x=>x.id===id);if(!p)return;
   const f=p.facturas[fi];f[field]=(field==='presup'||field==='facturado')?(val===''?null:parseFloat(val)||0):(val||null);
@@ -808,15 +554,16 @@ function uF(id,fi,field,val){
 }
 function uPill(sel){const pill=sel.closest('tr')?.querySelector('.ep');if(!pill)return;pill.className='ep '+epC(sel.value);pill.textContent=sel.value;}
 function syncAv(id,val){const v=Math.min(100,Math.max(0,Number(val)||0));const p=projects.find(x=>x.id===id);if(p)p.avance=v;const card=document.getElementById('card-'+id);if(!card)return;const range=card.querySelector('input[type=range]');const num=document.getElementById('avn-'+id);if(range)range.value=v;if(num)num.value=v;const fill=card.querySelector('.prog-fill');const pct=card.querySelector('.pct');if(fill)fill.style.width=v+'%';if(pct)pct.textContent=v+'%';}
+
 async function saveCard(id){
   const btn=document.getElementById('scb-'+id);btn.textContent='Guardando…';btn.className='save-btn saving';
-  const ok=await push();btn.textContent=ok?'✓ Guardado':'✗ Error de conexión';btn.className='save-btn '+(ok?'saved':'error');
-  if(ok)showToast('✓ Guardado en Google Sheets');else showToast('Sin conexión. Verifica internet.',true);
+  const ok=await pushToSheets();btn.textContent=ok?'✓ Guardado':'✗ Error';btn.className='save-btn '+(ok?'saved':'error');
+  if(ok)showToast('✓ Guardado en Google Sheets');else showToast('Sin conexión.',true);
   setTimeout(()=>{btn.textContent='Guardar cambios';btn.className='save-btn';},2800);
 }
 async function saveAll(){
   const btn=document.getElementById('save-all-btn');btn.textContent='Guardando…';btn.disabled=true;
-  const ok=await push();btn.textContent=ok?'✓ Guardado':'Error';
+  const ok=await pushToSheets();btn.textContent=ok?'✓ Guardado':'Error';
   if(ok)showToast('✓ Todo guardado en Google Sheets');else showToast('Sin conexión',true);
   setTimeout(()=>{btn.textContent='Guardar Todo';btn.disabled=false;},2000);
 }
@@ -829,13 +576,21 @@ function updateStats(){
   document.getElementById('kpi-total').textContent=projects.length;
   document.getElementById('kpi-activos').textContent=activos;
   document.getElementById('kpi-facturado').textContent=fmtK(tf);
-  const kv=document.getElementById('kpi-vencidos');kv.textContent=vencidos;
-  kv.style.color=vencidos>0?'var(--red)':'var(--text)';
+  const kv=document.getElementById('kpi-vencidos');kv.textContent=vencidos;kv.style.color=vencidos>0?'var(--rose)':'var(--text)';
 }
 function showToast(msg,err=false){const t=document.getElementById('toast');t.textContent=msg;t.className='show'+(err?' err':'');setTimeout(()=>t.className='',2500);}
+
 document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',function(){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active');curFilter=this.dataset.filter;renderAll();});});
 document.getElementById('search').addEventListener('input',renderAll);
-function showPage(name,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');btn.classList.add('active');if(name==='cashflow')renderCashflow();if(name==='dashboard')renderDashboard();}
+
+function showPage(name,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='cashflow')renderCashflow();
+  if(name==='dashboard')renderDashboard();
+}
 
 function buildCF(year){
   return projects.map(p=>{
@@ -846,7 +601,7 @@ function buildCF(year){
       if(f.facturado>0&&f.fechaEmision&&!f.fechaPago&&f.estado!=='Pagado'){const d=new Date(f.fechaEmision+'T00:00:00');if(d.getFullYear()===year)m[d.getMonth()].pendiente+=Number(f.facturado)||0;}
       if(f.presup>0&&f.estado==='Por cobrar'&&f.fechaEsperada&&!f.fechaEmision){const d=new Date(f.fechaEsperada+'T00:00:00');if(d.getFullYear()===year)m[d.getMonth()].pendiente+=Number(f.presup)||0;}
     });
-    return {empresa:p.empresa,m};
+    return{empresa:p.empresa,m};
   }).filter(r=>r.m.some(x=>x.presup>0||x.pagado>0||x.pendiente>0));
 }
 function renderCashflow(){
@@ -864,11 +619,10 @@ function renderCashflow(){
       <div class="bar-pend" style="height:${hpend}px;width:10px" title="Pendiente: S/ ${tPend[i].toFixed(0)}"></div>
     </div><div class="bar-lbl" style="${has?'':'opacity:.3'}">M${i+1}</div></div>`;
   }).join('');
-  document.getElementById('cf-chart').innerHTML=`<div class="cf-chart-title">Facturación ${year} — Presupuestado · Pagado · Pendiente de pago</div><div class="chart-bars">${bars}</div>`;
+  document.getElementById('cf-chart').innerHTML=`<div class="cf-chart-title">Facturación ${year} — Presupuestado · Pagado · Pendiente</div><div class="chart-bars">${bars}</div>`;
   const mh=Array.from({length:12},(_,i)=>`<th>M${i+1}<br><span style="font-size:.5rem;font-weight:400">${MN[i]}</span></th>`).join('');
-  function rows(data,f,cls){return data.map(r=>{const cells=r.m.map(x=>x[f]>0?`<td class="${cls}">S/ ${x[f].toLocaleString('es-PE',{minimumFractionDigits:0,maximumFractionDigits:0})}</td>`:`<td class="cf-zero">—</td>`).join('');return `<tr><td>${r.empresa}</td>${cells}</tr>`;}).join('');}
-  // Presupuestado con color según estado del mes
-  function rowsPresup(data){return data.map(r=>{const cells=r.m.map(x=>{if(x.presup<=0)return`<td class="cf-zero">—</td>`;const v='S/ '+x.presup.toLocaleString('es-PE',{minimumFractionDigits:0,maximumFractionDigits:0});if(x.pagado>0)return`<td class="cf-presup-pagado" title="Incluye facturas pagadas">${v}</td>`;if(x.pendiente>0)return`<td class="cf-presup-pendiente" title="Incluye facturas emitidas pendientes">${v}</td>`;return`<td class="cf-presup">${v}</td>`;}).join('');return `<tr><td>${r.empresa}</td>${cells}</tr>`;}).join('');}
+  function rows(data,f,cls){return data.map(r=>{const cells=r.m.map(x=>x[f]>0?`<td class="${cls}">S/ ${x[f].toLocaleString('es-PE',{minimumFractionDigits:0})}</td>`:`<td class="cf-zero">—</td>`).join('');return `<tr><td>${r.empresa}</td>${cells}</tr>`;}).join('');}
+  function rowsPresup(data){return data.map(r=>{const cells=r.m.map(x=>{if(x.presup<=0)return`<td class="cf-zero">—</td>`;const v='S/ '+x.presup.toLocaleString('es-PE',{minimumFractionDigits:0});if(x.pagado>0)return`<td class="cf-presup-pagado">${v}</td>`;if(x.pendiente>0)return`<td class="cf-presup-pendiente">${v}</td>`;return`<td class="cf-presup">${v}</td>`;}).join('');return `<tr><td>${r.empresa}</td>${cells}</tr>`;}).join('');}
   function tC(tots,cls){return tots.map(v=>v>0?`<td class="${cls}">S/ ${v.toLocaleString('es-PE',{minimumFractionDigits:0})}</td>`:`<td class="cf-zero">—</td>`).join('');}
   function aC(tots,cls){let a=0;return tots.map(v=>{a+=v;return a>0?`<td class="${cls}" style="opacity:.7">S/ ${a.toLocaleString('es-PE',{minimumFractionDigits:0})}</td>`:`<td class="cf-zero">—</td>`;}).join('');}
   document.getElementById('cf-table').innerHTML=`
@@ -889,39 +643,26 @@ function renderCashflow(){
     </tbody>`;
 }
 
-// ── DASHBOARD ─────────────────────────────────────────────────
 function renderDashboard(){
-  const MN2=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  const today2=new Date(); today2.setHours(0,0,0,0);
-
-  // ── Totales financieros
+  const today2=new Date();today2.setHours(0,0,0,0);
   const totalPresup=projects.reduce((s,p)=>s+tP(p),0);
   const totalFactur=projects.reduce((s,p)=>s+tF(p),0);
-  const totalPend=projects.reduce((s,p)=>{
-    return s+p.facturas.reduce((ss,f)=>{
-      if(['Por emitir','Por cobrar','Pendiente','Por facturar'].includes(f.estado)&&f.presup>0) return ss+Number(f.presup||0);
-      return ss;
-    },0);
-  },0);
+  const totalPend=projects.reduce((s,p)=>s+p.facturas.reduce((ss,f)=>{if(['Por emitir','Por cobrar','Pendiente','Por facturar'].includes(f.estado)&&f.presup>0)return ss+Number(f.presup||0);return ss;},0),0);
   const ejec=totalPresup>0?Math.round((totalFactur/totalPresup)*100):0;
   const vencidos=projects.filter(p=>(p.hito2&&new Date(p.hito2)<today2)||(p.hito3&&new Date(p.hito3)<today2)).length;
-
+  const h2total=projects.filter(p=>p.hito2).length;
+  const h2pres=projects.filter(p=>p.hito2Presentado).length;
   document.getElementById('db-presup').textContent=fmtK(totalPresup);
   document.getElementById('db-facturado').textContent=fmtK(totalFactur);
   document.getElementById('db-pendiente').textContent=fmtK(totalPend);
   document.getElementById('db-ejecucion').textContent=ejec+'%';
-  document.getElementById('db-empresas').textContent=projects.length;
-  const vEl=document.getElementById('db-vencidos');
-  vEl.textContent=vencidos;
-  vEl.style.color=vencidos>0?'var(--rose)':'var(--g900)';
+  const vEl=document.getElementById('db-vencidos2');vEl.textContent=vencidos;vEl.style.color=vencidos>0?'var(--rose)':'var(--g900)';
+  document.getElementById('db-h2pres').textContent=h2pres+'/'+h2total;
 
-  // ── Avance por empresa
-  const COLORS_DB=['#4f46e5','#0891b2','#059669','#d97706','#7c3aed','#e11d48','#0f766e','#9333ea','#c2410c','#0369a1','#15803d'];
-  const avEl=document.getElementById('db-avance-list');
-  const sortedByAvance=[...projects].sort((a,b)=>b.avance-a.avance);
-  avEl.innerHTML=sortedByAvance.map((p,i)=>{
-    const col=COLORS_DB[i%COLORS_DB.length];
-    const avp=Number(p.avance)||0;
+  // Avance por empresa
+  const sortedAv=[...projects].sort((a,b)=>b.avance-a.avance);
+  document.getElementById('db-avance-list').innerHTML=sortedAv.map((p,i)=>{
+    const col=COLORS[i%COLORS.length];const avp=Number(p.avance)||0;
     return `<div class="db-avance-item">
       <div class="db-avance-name" title="${p.empresa}">${p.empresa}</div>
       <div class="db-avance-track"><div class="db-avance-fill" style="width:${avp}%;background:${col}"></div></div>
@@ -929,285 +670,64 @@ function renderDashboard(){
     </div>`;
   }).join('');
 
-  // ── Tabla desembolsos por empresa
-  function dPill(v){ const ok=v==='Desembolsado'; const proc=v==='En proceso'||v==='Diagnóstico';
-    const cls=ok?'dp-ok':proc?'dp-proceso':'dp-pend';
-    const icon=ok?'✓':proc?'⟳':'✕';
-    return `<span class="db-pill ${cls}">${icon} ${v||'Pendiente'}</span>`;
-  }
-  const desembBody=document.getElementById('db-desemb-body');
-  if(desembBody){
-    desembBody.innerHTML=projects.map(p=>`<tr>
-      <td style="font-weight:600">${p.empresa}</td>
-      <td>${dPill(p.primerD)}</td>
-      <td>${dPill(p.segundoD)}</td>
-    </tr>`).join('');
-  }
-
-  // ── Barras horizontales: facturación por empresa
+  // Facturación por empresa
   const maxFact=Math.max(...projects.map(p=>tP(p)),1);
-  const sortedByFact=[...projects].sort((a,b)=>tP(b)-tP(a));
-  document.getElementById('db-fact-bars').innerHTML=sortedByFact.map((p,i)=>{
-    const tp2=tP(p), tf2=tF(p);
-    const wpresup=Math.round((tp2/maxFact)*100);
-    const wfact=tp2>0?Math.round((tf2/tp2)*100):0;
-    const col=COLORS_DB[i%COLORS_DB.length];
+  const sortedFact=[...projects].sort((a,b)=>tP(b)-tP(a));
+  document.getElementById('db-fact-bars').innerHTML=sortedFact.map((p,i)=>{
+    const tp2=tP(p),tf2=tF(p),col=COLORS[i%COLORS.length];
+    const wf=tp2>0?Math.round((tf2/tp2)*100):0;
     return `<div class="db-bar-item">
       <div class="db-bar-name" title="${p.empresa}">${p.empresa}</div>
-      <div class="db-bar-track" style="position:relative">
+      <div class="db-bar-track">
         <div style="position:absolute;inset:0;background:${col}18;border-radius:var(--r4)"></div>
-        <div class="db-bar-fill" style="width:${wfact}%;background:${col}">
-          ${wfact>15?`<span>S/ ${fmtNum(tf2)}</span>`:''}
+        <div class="db-bar-fill" style="position:relative;width:${wf}%;background:${col}">
+          ${wf>15?`<span>S/ ${fmtN(tf2)}</span>`:''}
         </div>
       </div>
-      <div class="db-bar-val">S/ ${fmtNum(tp2)}</div>
+      <div class="db-bar-val">S/ ${fmtN(tp2)}</div>
     </div>`;
   }).join('');
 
-  // ── Hitos próximos (próximos 60 días) y vencidos
-  const hitosEl=document.getElementById('db-hitos-list');
+  // Desembolsos
+  function dPill(v){const ok=v==='Desembolsado',proc=v==='En proceso'||v==='Diagnóstico';return `<span class="db-pill ${ok?'dp-ok':proc?'dp-proceso':'dp-pend'}">${ok?'✓':proc?'⟳':'✕'} ${v||'Pendiente'}</span>`;}
+  document.getElementById('db-desemb-body').innerHTML=projects.map(p=>`<tr><td style="font-weight:600">${p.empresa}</td><td>${dPill(p.primerD)}</td><td>${dPill(p.segundoD)}</td></tr>`).join('');
+
+  // Hitos próximos
   const hitos=[];
   projects.forEach(p=>{
-    if(p.hito2){const d=new Date(p.hito2+'T00:00:00');const diff=Math.round((d-today2)/86400000);hitos.push({empresa:p.empresa,label:'Hito 2',fecha:p.hito2,diff,d});}
-    if(p.hito3){const d=new Date(p.hito3+'T00:00:00');const diff=Math.round((d-today2)/86400000);hitos.push({empresa:p.empresa,label:'Hito 3',fecha:p.hito3,diff,d});}
+    if(p.hito2){const d=new Date(p.hito2+'T00:00:00');hitos.push({empresa:p.empresa,label:'Hito 2',fecha:p.hito2,diff:Math.round((d-today2)/86400000)});}
+    if(p.hito3){const d=new Date(p.hito3+'T00:00:00');hitos.push({empresa:p.empresa,label:'Hito 3',fecha:p.hito3,diff:Math.round((d-today2)/86400000)});}
   });
   hitos.sort((a,b)=>a.diff-b.diff);
-  const hitosFiltered=hitos.filter(h=>h.diff<=60);
-  if(hitosFiltered.length===0){
-    hitosEl.innerHTML='<div style="padding:20px;text-align:center;color:var(--text3);font-size:.76rem">No hay hitos en los próximos 60 días</div>';
-  } else {
-    hitosEl.innerHTML=hitosFiltered.map(h=>{
-      const isVenc=h.diff<0;
-      const isSoon=h.diff>=0&&h.diff<=14;
-      const col=isVenc?'var(--rose)':isSoon?'var(--amber)':'var(--emerald)';
-      const label=isVenc?`Vencido hace ${Math.abs(h.diff)} días`:h.diff===0?'Hoy':h.diff===1?'Mañana':`En ${h.diff} días`;
-      const fechaFmt=new Date(h.fecha+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'short'});
-      return `<div class="db-hito-item">
-        <div class="db-hito-dot" style="background:${col}"></div>
-        <div class="db-hito-info">
-          <div class="db-hito-empresa">${h.empresa}</div>
-          <div class="db-hito-desc">${h.label} · ${fechaFmt}</div>
-        </div>
-        <div class="db-hito-date" style="color:${col}">${label}</div>
-      </div>`;
-    }).join('');
-  }
+  const hf=hitos.filter(h=>h.diff<=60);
+  document.getElementById('db-hitos-list').innerHTML=hf.length?hf.map(h=>{
+    const isV=h.diff<0,isS=h.diff>=0&&h.diff<=14;
+    const col=isV?'var(--rose)':isS?'var(--amber)':'var(--emerald)';
+    const lbl=isV?`Vencido hace ${Math.abs(h.diff)}d`:h.diff===0?'Hoy':`En ${h.diff}d`;
+    const fecha=new Date(h.fecha+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'short'});
+    return `<div class="db-hito-item"><div class="db-hito-dot" style="background:${col}"></div><div class="db-hito-info"><div class="db-hito-empresa">${h.empresa}</div><div class="db-hito-desc">${h.label} · ${fecha}</div></div><div class="db-hito-date" style="color:${col}">${lbl}</div></div>`;
+  }).join(''):'<div style="padding:20px;text-align:center;color:var(--text3);font-size:.76rem">No hay hitos en los próximos 60 días</div>';
 
-  // ── Estado de facturas
-  const estados={Pagado:{count:0,monto:0},
-    'Por cobrar':{count:0,monto:0},
-    'Por emitir':{count:0,monto:0},
-    'Por facturar':{count:0,monto:0}};
-  projects.forEach(p=>p.facturas.forEach(f=>{
-    if(f.presup>0){
-      const k=estados[f.estado]?f.estado:'Por emitir';
-      if(estados[k]){estados[k].count++;estados[k].monto+=Number(f.presup||0);}
-    }
-  }));
-  const estColors={Pagado:'var(--emerald)','Por cobrar':'var(--brand)','Por emitir':'var(--amber)','Por facturar':'#7c3aed'};
-  document.getElementById('db-fact-estado').innerHTML=Object.entries(estados).map(([k,v])=>`
-    <div class="db-fest-item">
-      <div class="db-fest-val" style="color:${estColors[k]||'var(--g900)'}">${v.count}</div>
-      <div class="db-fest-lbl">${k}</div>
-      <div class="db-fest-amount">S/ ${fmtNum(v.monto)}</div>
-    </div>`).join('');
+  // Estado facturas
+  const est={Pagado:{c:0,m:0},'Por cobrar':{c:0,m:0},'Por emitir':{c:0,m:0},'Por facturar':{c:0,m:0}};
+  projects.forEach(p=>p.facturas.forEach(f=>{if(f.presup>0&&est[f.estado]){est[f.estado].c++;est[f.estado].m+=Number(f.presup||0);}}));
+  const estC={Pagado:'var(--emerald)','Por cobrar':'var(--brand)','Por emitir':'var(--amber)','Por facturar':'#7c3aed'};
+  document.getElementById('db-fact-estado').innerHTML=Object.entries(est).map(([k,v])=>`<div class="db-fest-item"><div class="db-fest-val" style="color:${estC[k]}">${v.c}</div><div class="db-fest-lbl">${k}</div><div class="db-fest-amount">S/ ${fmtN(v.m)}</div></div>`).join('');
 
-  // ── Proyectos por implementadora
+  // Implementadora
   const impl={};
   projects.forEach(p=>{const k=p.implementadora||'Sin asignar';if(!impl[k])impl[k]={count:0,presup:0};impl[k].count++;impl[k].presup+=tP(p);});
-  const implColors={'Underdog':'#5b21b6','Parking':'var(--brand)','Sin asignar':'var(--g400)'};
+  const implC2={'Underdog':'#5b21b6','Parking':'var(--brand)','Sin asignar':'var(--g400)'};
   const implBg={'Underdog':'#ede9fe','Parking':'var(--brand-lt)','Sin asignar':'var(--g100)'};
-  document.getElementById('db-impl-wrap').innerHTML=Object.entries(impl).sort((a,b)=>b[1].count-a[1].count).map(([k,v])=>`
-    <div class="db-impl-item">
-      <div>
-        <div class="db-impl-badge" style="background:${implBg[k]||'var(--g100)'};color:${implColors[k]||'var(--g600)'}">${k}</div>
-        <div class="db-impl-sub" style="margin-top:3px">S/ ${fmtNum(v.presup)} presupuestado</div>
-      </div>
-      <div style="text-align:right">
-        <div class="db-impl-count">${v.count}</div>
-        <div class="db-impl-sub">empresa${v.count!==1?'s':''}</div>
-      </div>
-    </div>`).join('');
+  document.getElementById('db-impl-wrap').innerHTML=Object.entries(impl).sort((a,b)=>b[1].count-a[1].count).map(([k,v])=>`<div class="db-impl-item"><div><div class="db-impl-badge" style="background:${implBg[k]||'var(--g100)'};color:${implC2[k]||'var(--g600)'}">${k}</div><div class="db-impl-sub" style="margin-top:3px">S/ ${fmtN(v.presup)} presupuestado</div></div><div style="text-align:right"><div class="db-impl-count">${v.count}</div><div class="db-impl-sub">empresa${v.count!==1?'s':''}</div></div></div>`).join('');
 
-  // ── Tabla estado presentación de hitos
-  const hitosPresBody=document.getElementById('db-hitos-pres-body');
-  if(hitosPresBody){
-    function fmtDate(d){ if(!d)return '<span style="color:var(--g400)">—</span>'; return new Date(d+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'2-digit'}); }
-    function presBadge(pres,fecha){
-      if(!fecha) return '<span style="color:var(--g400);font-size:.7rem">Sin fecha</span>';
-      if(pres) return '<span class="db-pill dp-ok">✓ Presentado</span>';
-      const diff=Math.round((new Date(fecha+'T00:00:00')-today2)/86400000);
-      if(diff<0) return '<span class="db-pill dp-pend">✕ No presentado</span>';
-      return '<span class="db-pill dp-proceso">⟳ Pendiente</span>';
-    }
-    hitosPresBody.innerHTML=projects.map(p=>`<tr>
-      <td style="font-weight:600">${p.empresa}</td>
-      <td>${fmtDate(p.hito2)}</td>
-      <td>${presBadge(p.hito2Presentado,p.hito2)}</td>
-      <td>${fmtDate(p.hito3)}</td>
-      <td>${presBadge(p.hito3Presentado,p.hito3)}</td>
-    </tr>`).join('');
-  }
-}
-
-function fmtNum(n){
-  if(!n||n===0)return '0';
-  if(n>=1000000)return (n/1000000).toFixed(1)+'M';
-  if(n>=1000)return (n/1000).toFixed(1)+'K';
-  return Math.round(n).toLocaleString('es-PE');
-}
-
-function renderDonut(svgId, legendId, data, total){
-  const svg=document.getElementById(svgId);
-  const legend=document.getElementById(legendId);
-  if(!svg||!legend)return;
-  const cx=60,cy=60,r=45,stroke=14;
-  const circum=2*Math.PI*r;
-  let offset=0;
-  let paths='';
-  data.forEach(d=>{
-    const pct=d.val/total;
-    const dash=pct*circum;
-    const gap=circum-dash;
-    paths+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${d.color}" stroke-width="${stroke}" stroke-dasharray="${dash.toFixed(2)} ${gap.toFixed(2)}" stroke-dashoffset="${-offset.toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;
-    offset+=pct*circum;
-  });
-  paths+=`<text x="${cx}" y="${cy-4}" text-anchor="middle" font-size="16" font-weight="800" fill="var(--g900)">${total}</text>`;
-  paths+=`<text x="${cx}" y="${cy+12}" text-anchor="middle" font-size="8" fill="var(--text3)">EMPRESAS</text>`;
-  svg.innerHTML=paths;
-  legend.innerHTML=data.map(d=>`<div class="db-legend-item">
-    <div class="db-legend-dot" style="background:${d.color}"></div>
-    <span>${d.label}</span>
-    <span class="db-legend-val">${d.val}</span>
-  </div>`).join('');
+  // Hitos presentados
+  function fd(d){if(!d)return '<span style="color:var(--g400)">—</span>';return new Date(d+'T00:00:00').toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'2-digit'});}
+  function pb(pres,fecha){if(!fecha)return '<span style="color:var(--g400);font-size:.7rem">Sin fecha</span>';if(pres)return '<span class="db-pill dp-ok">✓ Presentado</span>';const diff=Math.round((new Date(fecha+'T00:00:00')-today2)/86400000);return diff<0?'<span class="db-pill dp-no">✕ No presentado</span>':'<span class="db-pill dp-proceso">⟳ Pendiente</span>';}
+  document.getElementById('db-hitos-pres-body').innerHTML=projects.map(p=>`<tr><td style="font-weight:600">${p.empresa}</td><td>${fd(p.hito2)}</td><td>${pb(p.hito2Presentado,p.hito2)}</td><td>${fd(p.hito3)}</td><td>${pb(p.hito3Presentado,p.hito3)}</td></tr>`).join('');
 }
 
 loadFromSheets();
 </script>
-
-<!-- DASHBOARD PAGE -->
-<div class="page" id="page-dashboard">
-  <div class="db-header">
-    <h2 class="db-title">Dashboard de Seguimiento</h2>
-    <p class="db-sub">Indicadores clave del portafolio PROINNOVATE · Mipymes Digitales</p>
-  </div>
-
-  <!-- ROW 1: KPI cards -->
-  <div class="db-kpi-grid">
-    <div class="db-kpi-card">
-      <div class="db-kpi-icon" style="background:var(--brand-lt);color:var(--brand)">
-        <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      </div>
-      <div>
-        <div class="db-kpi-val" id="db-presup">S/ 0</div>
-        <div class="db-kpi-lbl">Total Presupuestado</div>
-      </div>
-    </div>
-    <div class="db-kpi-card">
-      <div class="db-kpi-icon" style="background:var(--emerald-lt);color:var(--emerald)">
-        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-      </div>
-      <div>
-        <div class="db-kpi-val" id="db-facturado">S/ 0</div>
-        <div class="db-kpi-lbl">Total Facturado</div>
-      </div>
-    </div>
-    <div class="db-kpi-card">
-      <div class="db-kpi-icon" style="background:var(--amber-lt);color:var(--amber)">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
-      <div>
-        <div class="db-kpi-val" id="db-pendiente">S/ 0</div>
-        <div class="db-kpi-lbl">Por Cobrar / Emitir</div>
-      </div>
-    </div>
-    <div class="db-kpi-card">
-      <div class="db-kpi-icon" style="background:#ede9fe;color:#5b21b6">
-        <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-      </div>
-      <div>
-        <div class="db-kpi-val" id="db-ejecucion">0%</div>
-        <div class="db-kpi-lbl">Ejecución Financiera</div>
-      </div>
-    </div>
-    <div class="db-kpi-card">
-      <div class="db-kpi-icon" style="background:var(--teal-lt);color:var(--teal)">
-        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <div>
-        <div class="db-kpi-val" id="db-empresas">0</div>
-        <div class="db-kpi-lbl">Empresas Activas</div>
-      </div>
-    </div>
-    <div class="db-kpi-card">
-      <div class="db-kpi-icon" style="background:var(--rose-lt);color:var(--rose)">
-        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-      </div>
-      <div>
-        <div class="db-kpi-val" id="db-vencidos">0</div>
-        <div class="db-kpi-lbl">Hitos Vencidos</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ROW 2: avance por empresa + estado desembolsos -->
-  <div class="db-row2">
-    <!-- Avance por empresa -->
-    <div class="db-panel db-panel-lg">
-      <div class="db-panel-title">Avance de Implementación por Empresa</div>
-      <div class="db-avance-list" id="db-avance-list"></div>
-    </div>
-    <!-- Estado desembolsos -->
-    <div class="db-panel">
-      <div class="db-panel-title">Estado de Desembolsos por Empresa</div>
-      <div style="overflow-x:auto">
-        <table class="db-desemb-table" id="db-desemb-table">
-          <thead><tr><th>Empresa</th><th>1er Desembolso</th><th>2do Desembolso</th></tr></thead>
-          <tbody id="db-desemb-body"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- ROW 3: facturación por empresa + hitos próximos -->
-  <div class="db-row2">
-    <!-- Facturación por empresa -->
-    <div class="db-panel db-panel-lg">
-      <div class="db-panel-title">Facturación por Empresa (S/)</div>
-      <div class="db-bars-wrap" id="db-fact-bars"></div>
-    </div>
-    <!-- Hitos próximos -->
-    <div class="db-panel">
-      <div class="db-panel-title">Hitos Próximos y Vencidos</div>
-      <div class="db-hitos-list" id="db-hitos-list"></div>
-    </div>
-  </div>
-
-  <!-- ROW 4: estado facturas + implementadora -->
-  <div class="db-row2">
-    <div class="db-panel">
-      <div class="db-panel-title">Estado de Facturas</div>
-      <div class="db-fact-estado" id="db-fact-estado"></div>
-    </div>
-    <div class="db-panel">
-      <div class="db-panel-title">Proyectos por Implementadora</div>
-      <div class="db-impl-wrap" id="db-impl-wrap"></div>
-    </div>
-  </div>
-
-  <!-- ROW 5: hitos presentados -->
-  <div style="margin-bottom:14px">
-    <div class="db-panel">
-      <div class="db-panel-title">Estado de Presentación de Hitos a PROINNOVATE</div>
-      <div style="overflow-x:auto">
-        <table class="db-hito-pres-table" id="db-hitos-pres-table">
-          <thead><tr><th>Empresa</th><th>Fecha Hito 2</th><th>Hito 2 Presentado</th><th>Fecha Hito 3</th><th>Hito 3 Presentado</th></tr></thead>
-          <tbody id="db-hitos-pres-body"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
