@@ -594,9 +594,17 @@ function showPage(name,btn){
 
 function buildCF(year){
   return projects.map(p=>{
-    const m=Array.from({length:12},()=>({presup:0,pagado:0,pendiente:0}));
+    const m=Array.from({length:12},()=>({presup:0,pagado:0,pendiente:0,presupPagado:false}));
     p.facturas.forEach(f=>{
-      if(f.presup>0&&f.fechaEsperada){const d=new Date(f.fechaEsperada+'T00:00:00');if(d.getFullYear()===year)m[d.getMonth()].presup+=Number(f.presup)||0;}
+      if(f.presup>0&&f.fechaEsperada){
+        const d=new Date(f.fechaEsperada+'T00:00:00');
+        if(d.getFullYear()===year){
+          const mi=d.getMonth();
+          m[mi].presup+=Number(f.presup)||0;
+          // Marcar si esta factura ya fue pagada (en cualquier mes)
+          if(f.estado==='Pagado'&&f.fechaPago) m[mi].presupPagado=true;
+        }
+      }
       if(f.facturado>0&&f.fechaPago&&f.estado==='Pagado'){const d=new Date(f.fechaPago+'T00:00:00');if(d.getFullYear()===year)m[d.getMonth()].pagado+=Number(f.facturado)||0;}
       if(f.facturado>0&&f.fechaEmision&&!f.fechaPago&&f.estado!=='Pagado'){const d=new Date(f.fechaEmision+'T00:00:00');if(d.getFullYear()===year)m[d.getMonth()].pendiente+=Number(f.facturado)||0;}
       if(f.presup>0&&f.estado==='Por cobrar'&&f.fechaEsperada&&!f.fechaEmision){const d=new Date(f.fechaEsperada+'T00:00:00');if(d.getFullYear()===year)m[d.getMonth()].pendiente+=Number(f.presup)||0;}
@@ -622,7 +630,7 @@ function renderCashflow(){
   document.getElementById('cf-chart').innerHTML=`<div class="cf-chart-title">Facturación ${year} — Presupuestado · Pagado · Pendiente</div><div class="chart-bars">${bars}</div>`;
   const mh=Array.from({length:12},(_,i)=>`<th>M${i+1}<br><span style="font-size:.5rem;font-weight:400">${MN[i]}</span></th>`).join('');
   function rows(data,f,cls){return data.map(r=>{const cells=r.m.map(x=>x[f]>0?`<td class="${cls}">S/ ${x[f].toLocaleString('es-PE',{minimumFractionDigits:0})}</td>`:`<td class="cf-zero">—</td>`).join('');return `<tr><td>${r.empresa}</td>${cells}</tr>`;}).join('');}
-  function rowsPresup(data){return data.map(r=>{const cells=r.m.map(x=>{if(x.presup<=0)return`<td class="cf-zero">—</td>`;const v='S/ '+x.presup.toLocaleString('es-PE',{minimumFractionDigits:0});if(x.pagado>0)return`<td class="cf-presup-pagado">${v}</td>`;if(x.pendiente>0)return`<td class="cf-presup-pendiente">${v}</td>`;return`<td class="cf-presup">${v}</td>`;}).join('');return `<tr><td>${r.empresa}</td>${cells}</tr>`;}).join('');}
+  function rowsPresup(data){return data.map(r=>{const cells=r.m.map(x=>{if(x.presup<=0)return`<td class="cf-zero">—</td>`;const v='S/ '+x.presup.toLocaleString('es-PE',{minimumFractionDigits:0});if(x.pagado>0||x.presupPagado)return`<td class="cf-presup-pagado" title="Factura pagada">${v}</td>`;if(x.pendiente>0)return`<td class="cf-presup-pendiente">${v}</td>`;return`<td class="cf-presup">${v}</td>`;}).join('');return `<tr><td>${r.empresa}</td>${cells}</tr>`;}).join('');}
   function tC(tots,cls){return tots.map(v=>v>0?`<td class="${cls}">S/ ${v.toLocaleString('es-PE',{minimumFractionDigits:0})}</td>`:`<td class="cf-zero">—</td>`).join('');}
   function aC(tots,cls){let a=0;return tots.map(v=>{a+=v;return a>0?`<td class="${cls}" style="opacity:.7">S/ ${a.toLocaleString('es-PE',{minimumFractionDigits:0})}</td>`:`<td class="cf-zero">—</td>`;}).join('');}
   document.getElementById('cf-table').innerHTML=`
